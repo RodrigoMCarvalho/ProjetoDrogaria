@@ -18,7 +18,7 @@
         <property name="connection.pool_size">1</property>
 
         <!-- SQL dialect -->
-        <property name="dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
+        <property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
 
         <!-- Enable Hibernate's automatic session context management -->
         <property name="current_session_context_class">thread</property>
@@ -32,7 +32,7 @@
         <!-- Drop and re-create the database schema on startup -->
         <property name="hbm2ddl.auto">update</property>
 
-       
+       	<mapping class="br.com.drogaria.domain.Fabricante"/>
 
     </session-factory>
 
