@@ -5,10 +5,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "tbl_fabricantes")
+		@NamedQueries({ @NamedQuery(name = "Fabricante.listar", query = "SELECT fabricante FROM Fabricante fabricante"),
+		@NamedQuery(name = "Fabricante.buscarPorCodigo", query = "SELECT fabricante FROM Fabricante fabricante WHERE fabricante.codigo=:codigo")
+})
 public class Fabricante {
 	@Id // primary key
 	@GeneratedValue(strategy = GenerationType.AUTO) // auto incremento
@@ -16,7 +21,7 @@ public class Fabricante {
 	private Long codigo;
 
 	@Column(name = "fab_descricao", length = 50, nullable = false)
-	private String string;
+	private String descricao;
 
 	public Long getCodigo() {
 		return codigo;
@@ -26,12 +31,17 @@ public class Fabricante {
 		this.codigo = codigo;
 	}
 
-	public String getString() {
-		return string;
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setString(String string) {
-		this.string = string;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	@Override
+	public String toString() {
+		return "Fabricante [código=" + codigo + ", descricao=" + descricao + "]";
 	}
 
 }

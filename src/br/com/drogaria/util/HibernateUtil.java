@@ -11,16 +11,16 @@ public class HibernateUtil {
 
 	private static SessionFactory buildSessionFactory() {
 		try {
-			 // Cria um SessionFactory a partir do hibernate.cfg.xml
-        	Configuration configuration = new Configuration();
-        	configuration.configure();
-        	
-        	ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-        			.applySettings(configuration.getProperties()).build();
-        	
-        	SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-        	
-        	return sessionFactory;
+			// Cria um SessionFactory a partir do hibernate.cfg.xml
+			Configuration configuration = new Configuration();
+			configuration.configure();
+
+			ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+					.applySettings(configuration.getProperties()).build();
+
+			SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+
+			return sessionFactory;
 		} catch (Throwable ex) {
 			// Exibe uma mensagem de exceção
 			System.err.println("Falha ao tentar criar o SessionFactory:" + ex);
