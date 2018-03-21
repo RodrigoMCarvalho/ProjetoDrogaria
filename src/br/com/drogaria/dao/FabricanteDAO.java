@@ -102,24 +102,5 @@ public class FabricanteDAO {
 		}
 	}
 
-	// método de exclusão por código do fabricante
-	public void remover(Long codigo) {
-		Session sessao = HibernateUtil.getSessionFactory().openSession();
-		Transaction transacao = null;
-		Fabricante fabricante = null;
 
-		try {
-			transacao = sessao.beginTransaction();
-			fabricante = buscarPorCodigo(codigo);
-			sessao.delete(fabricante);
-			transacao.commit();
-		} catch (RuntimeException e) {
-			if (sessao != null) { // se ocorrer uma Exception e a sessão nao estiver vazia, faz um rollback
-				transacao.rollback();
-			}
-			throw e;
-		} finally {
-			sessao.close();
-		}
-	}
 }

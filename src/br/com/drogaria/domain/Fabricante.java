@@ -11,7 +11,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tbl_fabricantes")
-		@NamedQueries({ @NamedQuery(name = "Fabricante.listar", query = "SELECT fabricante FROM Fabricante fabricante"),
+@NamedQueries({ 
+		@NamedQuery(name = "Fabricante.listar", query = "SELECT fabricante FROM Fabricante fabricante"),
 		@NamedQuery(name = "Fabricante.buscarPorCodigo", query = "SELECT fabricante FROM Fabricante fabricante WHERE fabricante.codigo=:codigo")
 })
 public class Fabricante {
@@ -26,7 +27,7 @@ public class Fabricante {
 	public Long getCodigo() {
 		return codigo;
 	}
-
+	
 	public void setCodigo(Long codigo) {
 		this.codigo = codigo;
 	}
@@ -41,7 +42,9 @@ public class Fabricante {
 
 	@Override
 	public String toString() {
-		return "Fabricante [código=" + codigo + ", descricao=" + descricao + "]";
+		return "Fabricante [codigo=" + codigo + ", descricao=" + descricao + "]";
 	}
+
+	
 
 }

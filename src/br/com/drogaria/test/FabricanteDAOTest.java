@@ -20,7 +20,7 @@ public class FabricanteDAOTest {
 	}
 
 	@Test
-	@Ignore
+	//@Ignore
 	public void listar() {
 		FabricanteDAO dao = new FabricanteDAO();
 		List<Fabricante> fabricantes = dao.listar();
@@ -50,15 +50,6 @@ public class FabricanteDAOTest {
 
 		dao.remover(fabricante);
 	}
-	
-	@Test
-	@Ignore
-	public void removerPorCodigo() {
-		FabricanteDAO dao = new FabricanteDAO();
-
-		dao.remover(9L);
-	}
-	
 	
 	@Test
 	@Ignore
