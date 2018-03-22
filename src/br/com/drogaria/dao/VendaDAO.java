@@ -6,47 +6,47 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import br.com.drogaria.domain.Funcionario;
+import br.com.drogaria.domain.Venda;
 import br.com.drogaria.util.HibernateUtil;
 
-public class FuncionarioDAO {
+public class VendaDAO {
 	Session sessao = HibernateUtil.getSessionFactory().openSession();
-	Transaction transacao = null;
-
-	public void salvar(Funcionario funcionario) {
-
+	
+	public void salvar(Venda venda) {
+		Session sessao = HibernateUtil.getSessionFactory().openSession();
+		Transaction transacao = null;
 		try {
 			transacao = sessao.beginTransaction();
-			sessao.save(funcionario);
+			sessao.save(venda);
 			transacao.commit();
 		} catch (Exception e) {
 			if (transacao != null) {
 				transacao.rollback();
 			}
 			throw e;
-		} finally {
+		}finally {
 			sessao.close();
 		}
 	}
-
 	@SuppressWarnings("unchecked")
-	public List<Funcionario> listar() {
-		List<Funcionario> listFuncionarios = null;
+	public List<Venda> listar() {
+		List<Venda> vendas  = null;
 		try {
-			Query consulta = sessao.getNamedQuery("Funcionario.listar");
-			listFuncionarios = consulta.list();
+			Query consulta = sessao.getNamedQuery("Venda.listar");
+			vendas = consulta.list();
 		} catch (RuntimeException e) {
 			throw e;
 		} finally {
 			sessao.close();
 		}
-		return listFuncionarios;
+		return vendas;
 	}
 
-	public void editar(Funcionario funcionario) {
+	public void editar(Venda venda) {
+		Transaction transacao = null;
 		try {
 			transacao = sessao.beginTransaction();
-			sessao.update(funcionario);
+			sessao.update(venda);
 			transacao.commit();
 		}catch (Exception e) {
 			if (transacao != null) {
@@ -58,25 +58,26 @@ public class FuncionarioDAO {
 		}
 	}
 	
-	public Funcionario buscarPorCod(Long codigo) {
-		Funcionario f1 = null;
+	public Venda buscarPorCod(Long codigo) {
+		Venda v1 = null;
 		try {
-			Query consulta = sessao.getNamedQuery("Funcionario.buscarPorCod");
+			Query consulta = sessao.getNamedQuery("Venda.buscarPorCodigo");
 			consulta.setLong("codigo", codigo); //"codigo" é referente a =:codigo em @NamedQuery
-			f1 = (Funcionario) consulta.uniqueResult();  //retorna apenas uma unica consulta
+			v1 = (Venda) consulta.uniqueResult();  //retorna apenas uma unica consulta
 		} catch (Exception e) {
 			throw e;
 		} finally {
 			sessao.close();
 		}
-		return f1;
+		return v1;
 	}
 	
-	public void excluir(Funcionario funcionario) {
+	public void excluir(Venda venda) {
 		Session sessao = HibernateUtil.getSessionFactory().openSession();
+		Transaction transacao = null;
 		try {
 			transacao = sessao.beginTransaction();
-			sessao.delete(funcionario);
+			sessao.delete(venda);
 			transacao.commit();
 		}catch (Exception e) {
 			if (transacao != null) {
@@ -87,22 +88,5 @@ public class FuncionarioDAO {
 			sessao.close();
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }

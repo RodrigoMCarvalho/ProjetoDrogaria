@@ -11,12 +11,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "tbl_vendas")
+@NamedQueries({ 
+	@NamedQuery(name = "Venda.listar", query = "SELECT venda FROM Venda venda"),
+	@NamedQuery(name = "Venda.buscarPorCodigo", query = "SELECT venda FROM Venda venda WHERE venda.codigo=:codigo")
+})
 public class Venda {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -65,6 +71,12 @@ public class Venda {
 
 	public void setFuncionario(Funcionario funcionario) {
 		this.funcionario = funcionario;
+	}
+
+	@Override
+	public String toString() {
+		return "Venda [codigo=" + codigo + ", horario=" + horario + ", valor=" + valor + ", funcionario=" + funcionario
+				+ "]";
 	}
 	
 	

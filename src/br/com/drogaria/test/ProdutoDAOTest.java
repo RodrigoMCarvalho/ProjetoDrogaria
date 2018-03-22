@@ -38,7 +38,7 @@ public class ProdutoDAOTest {
 	}
 	
 	@Test
-	@Ignore
+	//@Ignore
 	public void listar() {
 		ProdutoDAO pdao = new ProdutoDAO();
 		
@@ -50,7 +50,7 @@ public class ProdutoDAOTest {
 	}
 	
 	@Test
-	//@Ignore
+	@Ignore
 	public void excluir() {
 		ProdutoDAO pdao = new ProdutoDAO();
 		Produto p = pdao.buscarPorCod(3L);
@@ -58,7 +58,27 @@ public class ProdutoDAOTest {
 		pdao.excluir(p);		
 	}
 	
-	
+	@Test
+	@Ignore
+	public void editar() {
+		ProdutoDAO pdao = new ProdutoDAO();
+		Produto p = pdao.buscarPorCod(4L);
+		
+		p.setDescricao("Novalgina");
+		p.setPreco(new BigDecimal(4.50D));
+		p.setQuantidade(23);
+		
+		FabricanteDAO fdao = new FabricanteDAO();
+		Fabricante f1 = fdao.buscarPorCodigo(3L);
+		f1.setDescricao("TELETAN");
+		
+		p.setFabricante(f1);
+		
+		pdao.editar(p);
+		
+		
+		
+	}
 	
 	
 	

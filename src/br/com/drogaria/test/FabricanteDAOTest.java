@@ -20,7 +20,7 @@ public class FabricanteDAOTest {
 	}
 
 	@Test
-	//@Ignore
+	@Ignore
 	public void listar() {
 		FabricanteDAO dao = new FabricanteDAO();
 		List<Fabricante> fabricantes = dao.listar();
@@ -52,13 +52,13 @@ public class FabricanteDAOTest {
 	}
 	
 	@Test
-	@Ignore
+	//@Ignore
 	public void editar() {
 		FabricanteDAO dao = new FabricanteDAO();
 		Fabricante f1 = new Fabricante();
 		
-		f1.setCodigo(4L);
-		f1.setDescricao("Fiat");
+		f1.setCodigo(3L);
+		f1.setDescricao("Ceperatin");
 		
 		dao.editar(f1);
 		
