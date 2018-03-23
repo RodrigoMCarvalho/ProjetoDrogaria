@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="/Templates/modeloGeral.xhtml">
+	<ui:define name="conteudo">
+		<h:form>
+		
+			<p:toolbar>
+				<f:facet name="left">
+					<h:outputText value="Fabricantes" />
+				</f:facet>
+			</p:toolbar>
+			
+			<h:panelGrid columns="2">
+				<h:outputText value="Código" />
+				<p:inputText maxlength="20" size="10" readonly="true"/>
+
+				<h:outputText value="Descrição" />
+				<p:inputText maxlength="50" size="30" />
+				
+				
+			</h:panelGrid>
+			
+			<h:panelGrid columns="3">
+				<p:commandButton value="Novo" />
+				<p:commandButton value="Salvar" />
+				<p:commandButton value="Voltar" action="/Pages/fabricantePesquisa.xhtml?faces-redirect=true"/>
+			</h:panelGrid>
+			
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
