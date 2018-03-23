@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	 <style type="text/css">
+            .ui-widget {
+                font-size: 15px !important;
+            }
+        </style>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Drogaria</title>
+</h:head>
+<h:body>
+	<p:layout fullPage="true">
+		<p:layoutUnit header="Sistema para Gerenciamento de Drogarias"
+			position="north" resizable="false" closable="false"
+			collapsible="false">
+		</p:layoutUnit>
+
+		<p:layoutUnit header="Desenvolvido por Rodrigo Moreira"
+			position="south" resizable="false" closable="false"
+			collapsible="false">
+		</p:layoutUnit>
+
+		<p:layoutUnit header="Menu Principal" size="180" position="west"
+			resizable="false" closable="false" collapsible="false">
+			<h:form>
+				<p:panelMenu>
+					<p:submenu label="Arquivo">
+						<p:menuitem value="Principal" outcome="/Pages/principal.xhtml" />
+						<p:menuitem value="Sair" />
+					</p:submenu>
+					<p:submenu label="Cadastro">
+						<p:menuitem value="Fabricantes" />
+						<p:menuitem value="Produtos" />
+						<p:menuitem value="Funcionários" />
+					</p:submenu>
+					<p:submenu label="Venda">
+					</p:submenu>
+				</p:panelMenu>
+			</h:form>
+		</p:layoutUnit>
+
+		<p:layoutUnit position="center" resizable="false" closable="false"
+			collapsible="false">
+			<ui:insert name="conteudo" />
+		</p:layoutUnit>
+	</p:layout>
+</h:body>
+</html>
