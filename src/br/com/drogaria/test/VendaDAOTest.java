@@ -29,6 +29,7 @@ public class VendaDAOTest {
 	}
 
 	@Test
+	@Ignore
 	public void listar() {
 		VendaDAO vdao = new VendaDAO();
 		List<Venda> vendas = vdao.listar();
