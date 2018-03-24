@@ -40,7 +40,7 @@
 			
 			<h:panelGrid columns="3">
 				<p:commandButton value="Novo" />
-				<p:commandButton value="Salvar" />
+				<p:commandButton value="Salvar" actionListener="#{funcionarioBean.salvar}" update=":msgGlobalGrowl"/>
 				<p:commandButton value="Voltar" action="/Pages/funcionarioPesquisa.xhtml?faces-redirect=true"/>
 			</h:panelGrid>
 			

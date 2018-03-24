@@ -14,7 +14,12 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Drogaria</title>
 </h:head>
+
 <h:body>
+<!-- <p:growl id="msgGlobalGrowl" /> -->
+
+        
+    
 	<p:layout fullPage="true">
 		<p:layoutUnit header="Sistema para Gerenciamento de Drogarias"
 			position="north" resizable="false" closable="false"
@@ -47,6 +52,7 @@
 
 		<p:layoutUnit position="center" resizable="false" closable="false"
 			collapsible="false">
+			<p:messages id="msgGlobalGrowl" showDetail="true" closable="true"/>
 			<ui:insert name="conteudo" />
 		</p:layoutUnit>
 	</p:layout>
