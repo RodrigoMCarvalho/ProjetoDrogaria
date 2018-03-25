@@ -5,6 +5,10 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<ui:insert name="metadata" />
+	
+	
 <h:head>
 	 <style type="text/css">
             .ui-widget {
@@ -16,10 +20,9 @@
 </h:head>
 
 <h:body>
-<!-- <p:growl id="msgGlobalGrowl" /> -->
+<!-- Mensagens quando salvar -->
+<p:growl id="msgGlobalGrowl" sticky="true" />
 
-        
-    
 	<p:layout fullPage="true">
 		<p:layoutUnit header="Sistema para Gerenciamento de Drogarias"
 			position="north" resizable="false" closable="false"
@@ -52,7 +55,7 @@
 
 		<p:layoutUnit position="center" resizable="false" closable="false"
 			collapsible="false">
-			<p:messages id="msgGlobalGrowl" showDetail="true" closable="true"/>
+<!-- 			<p:messages id="msgGlobalGrowl" showDetail="true" closable="true"/>   Usando modo Messages -->
 			<ui:insert name="conteudo" />
 		</p:layoutUnit>
 	</p:layout>

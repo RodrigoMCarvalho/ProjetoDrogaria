@@ -7,28 +7,63 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 <ui:composition template="/Templates/modeloGeral.xhtml">
+
+	<ui:define name="metadata">
+		<f:metadata>
+				<!-- IMPORTANTE Necessário para poder carregar a listagem de fabricantes -->
+				<f:event listener="#{fabricanteBean.carregarPesquisa}"
+				type="preRenderView" />
+		</f:metadata>
+	</ui:define>
 	<ui:define name="conteudo">
+
 		<h:form>
 			<p:toolbar>
 				<f:facet name="left">
 					<h:outputText value="Fabricantes" />
 				</f:facet>
 			</p:toolbar>
+
 			<h:panelGrid columns="4">
-				<p:outputLabel value="Descrição:" />
-				<p:inputText maxlength="50" size="30" />
-				<p:commandButton value="Buscar" />
-				<p:commandButton value="Novo" action="/Pages/fabricanteCadastro.xhtml?faces-redirect=true" />
+				<p:outputLabel value="Novo Fabricante: " />
+				<p:commandButton value="Novo"
+					action="/Pages/fabricanteCadastro.xhtml?faces-redirect=true" />
 			</h:panelGrid>
-			<p:dataTable emptyMessage="Nenhum registro encontrado.">
-				<p:column headerText="Código">
+
+			<p:dataTable emptyMessage="Nenhum registro encontrado."
+				value="#{fabricanteBean.listFabricantes}"
+				filteredValue="#{fabricanteBean.listFabricantesFiltrados}"
+				var="fabricanteCursor" rows="7" paginator="true"
+				widgetVar="tblPesquisa">
+				<!-- IMPORTANTE "var" não é atributo de classe -->
+
+				<p:column headerText="Código" sortBy="#{fabricanteCursor.codigo}">
+					<h:outputText value="#{fabricanteCursor.codigo}" />
 				</p:column>
-				<p:column headerText="Descrição">
+
+				<p:column headerText="Descrição"
+					filterBy="#{fabricanteCursor.descricao}"
+					sortBy="#{fabricanteCursor.descricao}">
+					<h:outputText value="#{fabricanteCursor.descricao}" />
+
 				</p:column>
+
 				<p:column headerText="Opções">
-				</p:column>
+				
+					<p:button value="Editar" outcome="/Pages/fabricanteCadastro.xhtml" >
+					<f:param name="fabCod" value="#{fabricanteCursor.codigo}"/>
+					</p:button>
+					
+					<p:button value="Excluir" outcome="/Pages/fabricanteCadastro.xhtml" >
+					<f:param name="fabCod" value="#{fabricanteCursor.codigo}"/>
+					</p:button>
+					</p:column>
+					
+				
+
 			</p:dataTable>
 		</h:form>
+
 	</ui:define>
 </ui:composition>
 </html>

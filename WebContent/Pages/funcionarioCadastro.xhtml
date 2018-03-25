@@ -21,21 +21,21 @@
 				<p:inputText maxlength="20" size="10" readonly="true"/>
 
 				<h:outputText value="Nome: " />
-				<p:inputText maxlength="50" size="30" />
+				<p:inputText maxlength="50" size="30" value="#{funcionarioBean.funcionarioCadastro.nome}"/>
 				
 				<p:outputLabel value="CPF:"/>
-				<p:inputMask mask="999.999.999-99" size="12"/>
+				<p:inputMask mask="999.999.999-99" size="12" value="#{funcionarioBean.funcionarioCadastro.cpf}"/>
 				
 				<p:outputLabel  value="Função:"/>
 				<p:selectOneMenu>
-					<f:selectItem itemLabel="Selecione uma função"/>
-					<f:selectItem itemLabel="Administrador"/>
-					<f:selectItem itemLabel="Gerente"/>
-					<f:selectItem itemLabel="Balconista"/>
+					<f:selectItem itemLabel="Selecione uma função" value="#{funcionarioBean.funcionarioCadastro.funcao}"/>
+					<f:selectItem itemLabel="Administrador" value="#{funcionarioBean.funcionarioCadastro.funcao}"/>
+					<f:selectItem itemLabel="Gerente" value="#{funcionarioBean.funcionarioCadastro.funcao}"/>
+					<f:selectItem itemLabel="Balconista" value="#{funcionarioBean.funcionarioCadastro.funcao}"/>
 				</p:selectOneMenu>
 				
 				<p:outputLabel value="Senha: "/>
-				<p:password maxlength="8" size="15"/>
+				<p:password maxlength="8" size="15" value="#{funcionarioBean.funcionarioCadastro.senha}"/>
 			</h:panelGrid>
 			
 			<h:panelGrid columns="3">

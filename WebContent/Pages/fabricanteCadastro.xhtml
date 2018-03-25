@@ -7,28 +7,41 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 <ui:composition template="/Templates/modeloGeral.xhtml">
+	<ui:define name="metadata">
+		<f:event listener="#{fabricanteBean.carregarCadastro}" type="preRenderView"></f:event>
+	</ui:define>
+	
 	<ui:define name="conteudo">
-		<h:form>
-		
+		<h:form id="formFabCad">
 			<p:toolbar>
 				<f:facet name="left">
 					<h:outputText value="Fabricantes" />
 				</f:facet>
 			</p:toolbar>
 			
-			<h:panelGrid columns="2">
+			<h:panelGrid id="pnlFabCad" columns="2">
 				<h:outputText value="Código" />
-				<p:inputText maxlength="20" size="10" readonly="true"/>
+				<p:inputText maxlength="20" size="10" readonly="true" 
+				value="#{fabricanteBean.fabricanteCadastro.codigo}"/>
 
 				<h:outputText value="Descrição" />
-				<p:inputText maxlength="50" size="30" />
+				<p:inputText maxlength="50" size="30" 
+				value="#{fabricanteBean.fabricanteCadastro.descricao}"/>
 				
 				
 			</h:panelGrid>
 			
-			<h:panelGrid columns="3">
-				<p:commandButton value="Novo" />
-				<p:commandButton value="Salvar" actionListener="#{fabricanteBean.salvar}" update=":msgGlobalGrowl"/>
+			<h:panelGrid columns="6">
+				<p:commandButton value="Novo" actionListener="#{fabricanteBean.novo}"
+				update=":formFabCad:pnlFabCad"/> <!--  ***para limpar a tela(Ajax)*** -->
+				
+				<p:commandButton value="Salvar" actionListener="#{fabricanteBean.salvar}" 
+				update=":msgGlobalGrowl :formFabCad:pnlFabCad"/>
+				
+				<p:commandButton value="Editar"/>
+				
+				<p:commandButton value="Excluir"/>
+				
 				<p:commandButton value="Voltar" action="/Pages/fabricantePesquisa.xhtml?faces-redirect=true"/>
 			</h:panelGrid>
 			
