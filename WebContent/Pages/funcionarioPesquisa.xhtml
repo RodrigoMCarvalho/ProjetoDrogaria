@@ -7,6 +7,15 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 <ui:composition template="/Templates/modeloGeral.xhtml">
+
+	<ui:define name="metadata">
+		<f:metadata>
+				<!-- IMPORTANTE Necessário para poder carregar a listagem de funcionários -->
+				<f:event listener="#{funcionarioBean.carregarPesquisa}"
+				type="preRenderView" />
+		</f:metadata>
+	</ui:define>
+
 	<ui:define name="conteudo">
 		<h:form>
 		
@@ -37,14 +46,22 @@
 			<p:commandButton value="Novo" action="/Pages/funcionarioCadastro.xhtml?faces-redirect=true" />
 			</h:panelGrid>
 			
-			<p:dataTable emptyMessage="Nenhum registro encontrado.">
-				<p:column headerText="Código">
+			<p:dataTable emptyMessage="Nenhum registro encontrado." 
+				value="#{funcionarioBean.listFuncionarios}"
+				filteredValue="#{funcionarioBean.listFuncionariosFiltrados}"
+				var="funcionarioCursor" rows="7" paginator="true" >
+				
+				<p:column headerText="Código" sortBy="#{funcionarioCursor.codigo}">
+					<h:outputText value="#{funcionarioCursor.codigo}"/>
 				</p:column>
-				<p:column headerText="Nome">
+				<p:column headerText="Nome" sortBy="#{funcionarioCursor.nome}">
+					<h:outputText value="#{funcionarioCursor.nome}" />
 				</p:column>
-				<p:column headerText="CPF">
+				<p:column headerText="CPF" sortBy="#{funcionarioCursor.cpf}">
+					<h:outputText  value="#{funcionarioCursor.cpf}"/>
 				</p:column>
-				<p:column headerText="Função">
+				<p:column headerText="Função" sortBy="#{funcionarioCursor.funcao}">
+					<h:outputText  value="#{funcionarioCursor.funcao}"/>
 				</p:column>
 				<p:column headerText="Opções">
 				</p:column>

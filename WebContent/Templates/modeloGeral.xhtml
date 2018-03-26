@@ -5,23 +5,23 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-	
-	<ui:insert name="metadata" />
-	
-	
+
+<ui:insert name="metadata" />
+
+
 <h:head>
-	 <style type="text/css">
-            .ui-widget {
-                font-size: 15px !important;
-            }
-        </style>
+	<style type="text/css">
+ .ui-widget { 
+ 	font-size: 95% !important; 
+ } 
+</style> 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Drogaria</title>
 </h:head>
 
 <h:body>
-<!-- Mensagens quando salvar -->
-<p:growl id="msgGlobalGrowl" sticky="true" />
+	<!-- Mensagens quando salvar -->
+	<p:growl id="msgGlobalGrowl" sticky="true" />
 
 	<p:layout fullPage="true">
 		<p:layoutUnit header="Sistema para Gerenciamento de Drogarias"
@@ -43,9 +43,11 @@
 						<p:menuitem value="Sair" />
 					</p:submenu>
 					<p:submenu label="Cadastro">
-						<p:menuitem value="Fabricantes" outcome="/Pages/fabricantePesquisa.xhtml"/>
+						<p:menuitem value="Fabricantes"
+							outcome="/Pages/fabricantePesquisa.xhtml" />
 						<p:menuitem value="Produtos" />
-						<p:menuitem value="Funcionários" outcome="/Pages/funcionarioPesquisa.xhtml" />
+						<p:menuitem value="Funcionários"
+							outcome="/Pages/funcionarioPesquisa.xhtml" />
 					</p:submenu>
 					<p:submenu label="Venda">
 					</p:submenu>
@@ -55,7 +57,7 @@
 
 		<p:layoutUnit position="center" resizable="false" closable="false"
 			collapsible="false">
-<!-- 			<p:messages id="msgGlobalGrowl" showDetail="true" closable="true"/>   Usando modo Messages -->
+			<!--<p:messages id="msgGlobalGrowl" showDetail="true" closable="true"/>   Usando modo Messages -->
 			<ui:insert name="conteudo" />
 		</p:layoutUnit>
 	</p:layout>

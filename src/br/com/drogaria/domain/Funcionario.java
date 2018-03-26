@@ -38,6 +38,10 @@ public class Funcionario {
 	public void setCodigo(Long codigo) {
 		this.codigo = codigo;
 	}
+	
+	public Long getCodigo() {
+		return codigo;
+	}
 
 	public String getNome() {
 		return nome;

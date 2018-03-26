@@ -7,9 +7,11 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 <ui:composition template="/Templates/modeloGeral.xhtml">
+
 	<ui:define name="metadata">
 		<f:event listener="#{fabricanteBean.carregarCadastro}" type="preRenderView"></f:event>
 	</ui:define>
+	
 	
 	<ui:define name="conteudo">
 		<h:form id="formFabCad">
@@ -38,9 +40,11 @@
 				<p:commandButton value="Salvar" actionListener="#{fabricanteBean.salvar}" 
 				update=":msgGlobalGrowl :formFabCad:pnlFabCad"/>
 				
-				<p:commandButton value="Editar"/>
+				<p:commandButton value="Editar" actionListener="#{fabricanteBean.editar}"
+				update=":msgGlobalGrowl :formFabCad:pnlFabCad"/>
 				
-				<p:commandButton value="Excluir"/>
+				<p:commandButton value="Excluir" actionListener="#{fabricanteBean.excluir}"
+				update=":msgGlobalGrowl :formFabCad:pnlFabCad"/>
 				
 				<p:commandButton value="Voltar" action="/Pages/fabricantePesquisa.xhtml?faces-redirect=true"/>
 			</h:panelGrid>

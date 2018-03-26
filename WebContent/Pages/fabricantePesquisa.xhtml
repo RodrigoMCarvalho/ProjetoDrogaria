@@ -8,13 +8,13 @@
 
 <ui:composition template="/Templates/modeloGeral.xhtml">
 
-	<ui:define name="metadata">
+<!-- 	<ui:define name="metadata"> -->
 		<f:metadata>
-				<!-- IMPORTANTE Necessário para poder carregar a listagem de fabricantes -->
+<!-- 				IMPORTANTE Necessário para poder carregar a listagem de fabricantes -->
 				<f:event listener="#{fabricanteBean.carregarPesquisa}"
-				type="preRenderView" />
+				type="preRenderView"/>
 		</f:metadata>
-	</ui:define>
+<!-- 	</ui:define> -->
 	<ui:define name="conteudo">
 
 		<h:form>
@@ -33,8 +33,7 @@
 			<p:dataTable emptyMessage="Nenhum registro encontrado."
 				value="#{fabricanteBean.listFabricantes}"
 				filteredValue="#{fabricanteBean.listFabricantesFiltrados}"
-				var="fabricanteCursor" rows="7" paginator="true"
-				widgetVar="tblPesquisa">
+				var="fabricanteCursor" rows="7" paginator="true">
 				<!-- IMPORTANTE "var" não é atributo de classe -->
 
 				<p:column headerText="Código" sortBy="#{fabricanteCursor.codigo}">
@@ -44,17 +43,19 @@
 				<p:column headerText="Descrição"
 					filterBy="#{fabricanteCursor.descricao}"
 					sortBy="#{fabricanteCursor.descricao}">
-					<h:outputText value="#{fabricanteCursor.descricao}" />
+					<h:outputText value="#{fabricanteCursor.descricao}"/>
 
 				</p:column>
 
 				<p:column headerText="Opções">
 				
 					<p:button value="Editar" outcome="/Pages/fabricanteCadastro.xhtml" >
+                    <!-- Envia o parâmetro via GET -->
 					<f:param name="fabCod" value="#{fabricanteCursor.codigo}"/>
 					</p:button>
 					
 					<p:button value="Excluir" outcome="/Pages/fabricanteCadastro.xhtml" >
+					<!-- Envia o parâmetro via GET -->
 					<f:param name="fabCod" value="#{fabricanteCursor.codigo}"/>
 					</p:button>
 					</p:column>
