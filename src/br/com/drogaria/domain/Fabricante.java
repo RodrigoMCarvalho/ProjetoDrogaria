@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "tbl_fabricantes")
@@ -20,7 +22,9 @@ public class Fabricante {
 	@GeneratedValue(strategy = GenerationType.AUTO) // auto incremento
 	@Column(name = "fab_codigo")
 	private Long codigo;
-
+	
+	@NotEmpty(message="Favor informar o fabricante.")     //Hibernate Validator
+	@Size(min=5,max=50,message="Tamanho inválido (5 - 50).")   //Hibernate Validator
 	@Column(name = "fab_descricao", length = 50, nullable = false)
 	private String descricao;
 

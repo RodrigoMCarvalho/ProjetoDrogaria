@@ -9,9 +9,12 @@
 <ui:composition template="/Templates/modeloGeral.xhtml">
 
 	<ui:define name="metadata">
+		<f:metadata>
+		<f:viewParam name="fabAcao" value="#{fabricanteBean.acao}" />
+		<f:viewParam name="fabCod" value="#{fabricanteBean.codigo}" />
 		<f:event listener="#{fabricanteBean.carregarCadastro}" type="preRenderView"></f:event>
+		</f:metadata>
 	</ui:define>
-	
 	
 	<ui:define name="conteudo">
 		<h:form id="formFabCad">
@@ -28,25 +31,39 @@
 
 				<h:outputText value="Descrição" />
 				<p:inputText maxlength="50" size="30" 
-				value="#{fabricanteBean.fabricanteCadastro.descricao}"/>
+				value="#{fabricanteBean.fabricanteCadastro.descricao}"
+				readonly="#{fabricanteBean.acao == 'Excluir'}">
+				<f:validateBean />   <!-- Hiberate Validator -->
+				</p:inputText>
 				
+		<!--  readonly por padrão é false, e nesse caso, quando o parâmetro 'fabAcao'  -->
+		<!--  for 'Excluir', altera para true e não deixa o usuário alterar o campo. --> 
 				
 			</h:panelGrid>
 			
 			<h:panelGrid columns="6">
 				<p:commandButton value="Novo" actionListener="#{fabricanteBean.novo}"
-				update=":formFabCad:pnlFabCad"/> <!--  ***para limpar a tela(Ajax)*** -->
+				update=":formFabCad:pnlFabCad"   
+				rendered="#{fabricanteBean.acao == 'Novo'}"/> 
+				<!-- UPDATE:"" ***para limpar a tela(Ajax)*** -->
 				
 				<p:commandButton value="Salvar" actionListener="#{fabricanteBean.salvar}" 
-				update=":msgGlobalGrowl :formFabCad:pnlFabCad"/>
+				update=":msgGlobalGrowl :formFabCad:pnlFabCad"
+				rendered="#{fabricanteBean.acao == 'Novo'}"/>
 				
 				<p:commandButton value="Editar" actionListener="#{fabricanteBean.editar}"
-				update=":msgGlobalGrowl :formFabCad:pnlFabCad"/>
+				update=":msgGlobalGrowl :formFabCad:pnlFabCad"
+				rendered="#{fabricanteBean.acao == 'Editar'}" />
 				
 				<p:commandButton value="Excluir" actionListener="#{fabricanteBean.excluir}"
-				update=":msgGlobalGrowl :formFabCad:pnlFabCad"/>
+				update=":msgGlobalGrowl :formFabCad:pnlFabCad"
+				rendered="#{fabricanteBean.acao == 'Excluir'}"/>
 				
-				<p:commandButton value="Voltar" action="/Pages/fabricantePesquisa.xhtml?faces-redirect=true"/>
+		<!--	rendered serve para ativar o botão, se a condição for verdade  -->
+		<!-- 	Ex: 'Novo' é enviado de FabricantePesquisa(fabAcao)            -->
+		<!-- 	armazenado no atributo acao e usado no método carregarCadastro -->
+		
+				<p:button value="Voltar" outcome="/Pages/fabricantePesquisa.xhtml"/>
 			</h:panelGrid>
 			
 		</h:form>

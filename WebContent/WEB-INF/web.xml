@@ -24,7 +24,12 @@
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
 	<context-param>
+   <!-- Tema do PrimeFaces -->
 		<param-name>primefaces.THEME</param-name>
 		<param-value>afternoon</param-value>
 	</context-param>
+	<listener>
+	<!-- Carregamento do contexto do Hibernate -->
+		<listener-class>br.com.drogaria.util.ContextListener</listener-class>
+	</listener>
 </web-app>

@@ -26,8 +26,10 @@
 
 			<h:panelGrid columns="4">
 				<p:outputLabel value="Novo Fabricante: " />
-				<p:commandButton value="Novo"
-					action="/Pages/fabricanteCadastro.xhtml?faces-redirect=true" />
+				<p:button value="Novo"
+					outcome="/Pages/fabricanteCadastro.xhtml?faces-redirect=true" >
+				<f:param name="fabAcao" value="Novo"/> <!--enviado por paramêtro GET -->
+				</p:button>
 			</h:panelGrid>
 
 			<p:dataTable emptyMessage="Nenhum registro encontrado."
@@ -51,11 +53,13 @@
 				
 					<p:button value="Editar" outcome="/Pages/fabricanteCadastro.xhtml" >
                     <!-- Envia o parâmetro via GET -->
+                    <f:param name="fabAcao" value="Editar"/>
 					<f:param name="fabCod" value="#{fabricanteCursor.codigo}"/>
 					</p:button>
 					
 					<p:button value="Excluir" outcome="/Pages/fabricanteCadastro.xhtml" >
 					<!-- Envia o parâmetro via GET -->
+					<f:param name="fabAcao" value="Excluir"/>
 					<f:param name="fabCod" value="#{fabricanteCursor.codigo}"/>
 					</p:button>
 					</p:column>

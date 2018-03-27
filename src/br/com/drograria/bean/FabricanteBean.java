@@ -9,7 +9,6 @@ import br.com.drogaria.dao.FabricanteDAO;
 import br.com.drogaria.domain.Fabricante;
 import br.com.drogaria.util.FacesUtil;
 
-
 @ManagedBean
 @ViewScoped
 public class FabricanteBean {
@@ -17,28 +16,31 @@ public class FabricanteBean {
 	private Fabricante fabricanteCadastro;
 	private List<Fabricante> listFabricantes;
 	private List<Fabricante> listFabricantesFiltrados;
+	private String acao; //irá guardar 'Novo', 'Editar', 'Excluir'
+	private Long codigo;
 
 	public void salvar() { // try catch receberá informações da classe DAO
 		try {
-			//validação caso o usuário deixe o campo em branco
-			if (fabricanteCadastro.getDescricao().isEmpty()) {
-				FacesUtil.addMsgError("Preencha os dados do fabricantes!");
-			} else {
-				
+			//**** Método usado antes do Hibernate Validator ***
+			// validação caso o usuário deixe o campo em branco
+			//if (fabricanteCadastro.getDescricao().isEmpty()) {
+			//	FacesUtil.addMsgError("Preencha os dados do fabricantes!");
+			//} else {
+
 				FabricanteDAO fdao = new FabricanteDAO();
 				fdao.salvar(fabricanteCadastro);
-				fabricanteCadastro = new Fabricante();//reinstanciar para limpar os dados após a inserção
+				fabricanteCadastro = new Fabricante();// reinstanciar para limpar os dados após a inserção
 				FacesUtil.addMsgInfo("Fabricante salvo com sucesso!"); // ***usando o GROWL e classe FacesUtil ***
 				// FacesContext.getCurrentInstance().addMessage(null, new
 				// FacesMessage(FacesMessage.SEVERITY_INFO,
 				// "Informação: ", "Fabricante salvo com sucesso!")); //*** usando o Message ***
-			}
+			//}
 		} catch (Exception e) {
 			// e.printStackTrace(); ***usado para debugar***
 			FacesUtil.addMsgError("Erro para salvar um fabricante: " + e.getMessage());
 		}
 	}
-	
+
 	public void editar() {
 		try {
 			FabricanteDAO fdao = new FabricanteDAO();
@@ -48,47 +50,69 @@ public class FabricanteBean {
 			FacesUtil.addMsgError("Erro para alterar fabricante: " + e.getMessage());
 		}
 	}
-	
+
 	public void excluir() {
-		try {
-			FabricanteDAO fdao = new FabricanteDAO();
-			fdao.remover(fabricanteCadastro);
-			fabricanteCadastro = new Fabricante();
-			FacesUtil.addMsgInfo("Fabricante excluído com sucesso!");
-			
-		} catch (Exception e) {
-			FacesUtil.addMsgError("Erro para excluir o fabricante: " + e.getMessage());
-		}
+//		if (fabricanteCadastro.getDescricao().isEmpty()) {
+//			FacesUtil.addMsgError("ERRO: Favor informar o fabricante.");
+//		} else {     **** Método usado antes do Hibernate Validator ***
+			try {
+				FabricanteDAO fdao = new FabricanteDAO();
+				fdao.remover(fabricanteCadastro);
+				fabricanteCadastro = new Fabricante();
+				FacesUtil.addMsgInfo("Fabricante excluído com sucesso!");
+				  
+			} catch (Exception e) {
+				FacesUtil.addMsgError("Erro para excluir o fabricante: " + e.getMessage());
+			}
 	}
-	
+
 	public void carregarPesquisa() {
 		try {
 			FabricanteDAO fdao = new FabricanteDAO();
 			listFabricantes = fdao.listar();
 		} catch (Exception e) {
-			FacesUtil.addMsgError("Erro para listar os fabricantes: " +e.getMessage());
+			FacesUtil.addMsgError("Erro para listar os fabricantes: " + e.getMessage());
 		}
 	}
-	
-	//método para carregar o cadastro enviado por GET
+
+	// método para carregar o cadastro enviado por GET
 	public void carregarCadastro() {
 		try {
-			String valor = FacesUtil.getParam("fabCod"); //parâmetro enviado por GET
-			if (valor != null) {
-				Long codigo =Long.parseLong(valor); //converter valor para Long
+//			acao = FacesUtil.getParam("fabAcao"); // parâmetro enviado por GET
+//			String valor = FacesUtil.getParam("fabCod"); // parâmetro enviado por GET
+			if (codigo != null) {
+//				Long codigo = Long.parseLong(valor); // converter valor para Long
 				FabricanteDAO fdao = new FabricanteDAO();
 				fabricanteCadastro = fdao.buscarPorCodigo(codigo);
+			} else {
+				fabricanteCadastro = new Fabricante();
 			}
 		} catch (Exception e) {
-			FacesUtil.addMsgError("Erro ao tentar obter os dados do fabricantes: " +e.getMessage());
+			FacesUtil.addMsgError("Erro ao tentar obter os dados do fabricantes: " + e.getMessage());
 		}
 	}
-	
+
 	public void novo() {
-		fabricanteCadastro = new Fabricante(); ////reinstanciar para limpar os dados após a inserção
+		fabricanteCadastro = new Fabricante(); //// reinstanciar para limpar os dados após a inserção
 	}
 	
 	
+	public String getAcao() {
+		return acao;
+	}
+
+	public void setAcao(String acao) {
+		this.acao = acao;
+	}
+	
+	
+	public Long getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
+	}
 
 	public Fabricante getFabricanteCadastro() {
 		if (fabricanteCadastro == null) {
