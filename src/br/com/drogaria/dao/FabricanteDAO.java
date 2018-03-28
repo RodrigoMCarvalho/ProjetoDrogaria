@@ -15,7 +15,6 @@ public class FabricanteDAO {
 	public void salvar(Fabricante fabricante) {
 		Session sessao = HibernateUtil.getSessionFactory().openSession();// captura a fábrica de sessões
 		Transaction transacao = null;
-
 		try {
 			transacao = sessao.beginTransaction();
 			sessao.save(fabricante);

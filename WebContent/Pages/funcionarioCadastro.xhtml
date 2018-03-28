@@ -6,45 +6,82 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-	<ui:composition template="/Templates/modeloGeral.xhtml">
-		<ui:define name="conteudo">
-			<h:form>
-			
+<ui:composition template="/Templates/modeloGeral.xhtml">
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="funAcao" value="#{funcionarioBean.acao}" />
+			<f:viewParam name="funCod" value="#{funcionarioBean.codigo}" />
+			<f:event listener="#{funcionarioBean.carregarCadastro}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+
+	<ui:define name="conteudo">
+
+
+		<h:form id="formFunCad">
+
 			<p:toolbar>
 				<f:facet name="left">
 					<h:outputText value="Funcionários" />
 				</f:facet>
 			</p:toolbar>
-			
+
 			<h:panelGrid columns="2">
 				<h:outputText value="Código" />
-				<p:inputText maxlength="20" size="10" readonly="true"/>
+				<p:inputText maxlength="20" size="10" readonly="true"
+					value="#{funcionarioBean.funcionarioCadastro.codigo}" />
 
 				<h:outputText value="Nome: " />
-				<p:inputText maxlength="50" size="30" value="#{funcionarioBean.funcionarioCadastro.nome}"/>
-				
-				<p:outputLabel value="CPF:"/>
-				<p:inputMask mask="999.999.999-99" size="12" value="#{funcionarioBean.funcionarioCadastro.cpf}"/>
-				
-				<p:outputLabel  value="Função:"/>
-				<p:selectOneMenu>
-					<f:selectItem itemLabel="Selecione uma função" value="#{funcionarioBean.funcionarioCadastro.funcao}"/>
-					<f:selectItem itemLabel="Administrador" value="#{funcionarioBean.funcionarioCadastro.funcao}"/>
-					<f:selectItem itemLabel="Gerente" value="#{funcionarioBean.funcionarioCadastro.funcao}"/>
-					<f:selectItem itemLabel="Balconista" value="#{funcionarioBean.funcionarioCadastro.funcao}"/>
+				<p:inputText maxlength="50" size="30"
+					value="#{funcionarioBean.funcionarioCadastro.nome}"
+					readonly="#{funcionarioBean.acao == 'Excluir'}">
+					<f:validateBean />
+					<!-- Hiberate Validator -->
+				</p:inputText>
+
+				<p:outputLabel value="CPF:" />
+				<p:inputMask mask="999.999.999-99" size="15"
+					value="#{funcionarioBean.funcionarioCadastro.cpf}"
+					readonly="#{funcionarioBean.acao == 'Excluir'}">
+					<f:validateBean />
+					<!-- Hiberate Validator -->
+				</p:inputMask>
+
+				<p:outputLabel value="Função:" />
+				<p:selectOneMenu
+					value="#{funcionarioBean.funcionarioCadastro.funcao}">
+					<f:validateBean />
+					<f:selectItem itemLabel="Selecione uma função"
+						itemValue="" />
+					<f:selectItem itemLabel="Administrador"
+						itemValue="Administrador" />
+					<f:selectItem itemLabel="Gerente"
+						itemValue="Gerente" />
+					<f:selectItem itemLabel="Balconista"
+						itemValue="Balconista" />
 				</p:selectOneMenu>
-				
-				<p:outputLabel value="Senha: "/>
-				<p:password maxlength="8" size="15" value="#{funcionarioBean.funcionarioCadastro.senha}"/>
+
+				<p:outputLabel value="Senha: " />
+				<p:password maxlength="8" size="15"
+					value="#{funcionarioBean.funcionarioCadastro.senha}"
+					readonly="#{funcionarioBean.acao == 'Excluir'}" redisplay="true"/>
 			</h:panelGrid>
-			
-			<h:panelGrid columns="3">
-				<p:commandButton value="Novo" />
-				<p:commandButton value="Salvar" actionListener="#{funcionarioBean.salvar}" update=":msgGlobalGrowl"/>
-				<p:commandButton value="Voltar" action="/Pages/funcionarioPesquisa.xhtml?faces-redirect=true"/>
+
+			<h:panelGrid columns="5">
+				<p:commandButton value="Novo" rendered="#{funcionarioBean.acao == 'Novo'}" />
+				<p:commandButton value="Salvar" rendered="#{funcionarioBean.acao == 'Novo'}"
+					actionListener="#{funcionarioBean.salvar}" update=":msgGlobalGrowl" />
+				<p:commandButton value="Editar" rendered="#{funcionarioBean.acao == 'Editar'}"
+					actionListener="#{funcionarioBean.editar}" update=":msgGlobalGrowl" />
+				<p:commandButton value="Excluir" rendered="#{funcionarioBean.acao == 'Excluir'}"
+					actionListener="#{funcionarioBean.excluir}"
+					update=":msgGlobalGrowl" />
+				<p:button value="Voltar" outcome="/Pages/funcionarioPesquisa.xhtml" />
 			</h:panelGrid>
-			
+
 		</h:form>
-		</ui:define>
-	</ui:composition>
+	</ui:define>
+</ui:composition>
 </html>

@@ -8,6 +8,10 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.br.CPF;
 
 @Entity
 @Table(name = "tbl_funcionarios")
@@ -20,16 +24,22 @@ public class Funcionario {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "fun_codigo")
 	private Long codigo;
-
+	
+	@NotEmpty(message="O campo Nome é obrigatório.")  //Hibernate Validator
+	@Size(min=5, max=50, message="Tamanho inválido do campo Nome (5 - 50).")  //Hibernate Validator
 	@Column(name = "fun_nome", length = 50, nullable = false) // nome,tamanho,not null
 	private String nome;
-
+	
+	@CPF (message="CPF é inválido.")    //Hibernate Validator 
 	@Column(name = "fun_cpf", length = 14, nullable = false, unique = true)
 	private String cpf;
-
+	
+	@NotEmpty(message="O campo Senha é obrigatório.")
+	@Size(min=8, max=8, message="Tamanho inválido do campo Senha (8).")
 	@Column(name = "fun_senha", length = 32, nullable = false)
 	private String senha;
-
+	
+	@NotEmpty(message="O campo Função é obrigatório.")
 	@Column(name = "fun_funcao", length = 50, nullable = false)
 	private String funcao;
 

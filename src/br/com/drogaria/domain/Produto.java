@@ -13,6 +13,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+
 
 @Entity
 @Table(name="tbl_produtos")
@@ -26,12 +34,19 @@ public class Produto {
 	@Column(name="pro_codigo")
 	private Long codigo;
 	
+	@NotEmpty(message="O campo Descrição do PRODUTO é obrigatório")
 	@Column(name="pro_descricao",length=50, nullable=false)
 	private String descricao;
 	
+	@NotNull(message="O campo Preço é obrigatório")
+	@DecimalMin(value="0.00", message="Informe um valor maior que 0.")
+	@DecimalMax(value="99999.99",message="Informe um valor menor que 100.00.")
 	@Column(name="pro_preco",scale = 2,precision=7, nullable=false ) //decimal(7,2)
 	private BigDecimal preco;
 	
+	@NotNull(message="O campo Quantidade é obrigatório.")
+	@Min(value=0 , message="Informe um valor maior que 0 para a quantidade.")  // para Inteiros
+	@Max(value=9999 , message="Informe um valor menor que 10.000 para a quantidade.")
 	@Column(name="pro_quantidade",nullable=false)
 	private Integer quantidade;
 	

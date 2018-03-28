@@ -14,11 +14,12 @@ public class ProdutoDAO {
 	
 	public void salvar(Produto produto) {
 		Transaction transacao = null;
+		Session sessao = HibernateUtil.getSessionFactory().openSession();
 		try {
 			transacao = sessao.beginTransaction();
 			sessao.save(produto);
 			transacao.commit();
-		} catch (Exception e) {
+		} catch (RuntimeException e) {
 			if (transacao != null) {
 				transacao.rollback();
 			}

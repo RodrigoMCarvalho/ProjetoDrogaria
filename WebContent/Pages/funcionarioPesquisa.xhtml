@@ -8,63 +8,68 @@
 
 <ui:composition template="/Templates/modeloGeral.xhtml">
 
-	<ui:define name="metadata">
-		<f:metadata>
-				<!-- IMPORTANTE Necessário para poder carregar a listagem de funcionários -->
-				<f:event listener="#{funcionarioBean.carregarPesquisa}"
-				type="preRenderView" />
-		</f:metadata>
-	</ui:define>
+	<!-- 	<ui:define name="metadata"> -->
+	<f:metadata>
+		<!-- IMPORTANTE Necessário para poder carregar a listagem de funcionários -->
+		<f:event listener="#{funcionarioBean.carregarPesquisa}"
+			type="preRenderView" />
+	</f:metadata>
+	<!-- 	</ui:define> -->
 
 	<ui:define name="conteudo">
 		<h:form>
-		
+
 			<p:toolbar>
 				<f:facet name="left">
 					<h:outputText value="Funcionarios" />
 				</f:facet>
 			</p:toolbar>
+
 			
-			<h:panelGrid columns="6">
-				<p:outputLabel value="Nome: " />
-				<p:inputText maxlength="50" size="34" />
-				
-				<p:outputLabel value="CPF:"/>
-				<p:inputMask mask="999.999.999-99" size="12"/>
-				
-				<p:outputLabel  value="Função:"/>
-				<p:selectOneMenu>
-					<f:selectItem itemLabel="Selecione uma função"/>
-					<f:selectItem itemLabel="Administrador"/>
-					<f:selectItem itemLabel="Gerente"/>
-					<f:selectItem itemLabel="Balconista"/>
-				</p:selectOneMenu>
-			</h:panelGrid>
 
 			<h:panelGrid columns="2">
-			<p:commandButton value="Buscar" />
-			<p:commandButton value="Novo" action="/Pages/funcionarioCadastro.xhtml?faces-redirect=true" />
+				<p:outputLabel value="Novo Funcionário: " />
+				<p:button value="Novo"
+					outcome="/Pages/funcionarioCadastro.xhtml">
+					<f:param name="funAcao" value="Novo" />
+				</p:button>	
 			</h:panelGrid>
-			
-			<p:dataTable emptyMessage="Nenhum registro encontrado." 
+
+			<p:dataTable emptyMessage="Nenhum registro encontrado."
 				value="#{funcionarioBean.listFuncionarios}"
 				filteredValue="#{funcionarioBean.listFuncionariosFiltrados}"
-				var="funcionarioCursor" rows="7" paginator="true" >
-				
+				var="funcionarioCursor" rows="7" paginator="true">
+
 				<p:column headerText="Código" sortBy="#{funcionarioCursor.codigo}">
-					<h:outputText value="#{funcionarioCursor.codigo}"/>
+					<h:outputText value="#{funcionarioCursor.codigo}" />
 				</p:column>
-				<p:column headerText="Nome" sortBy="#{funcionarioCursor.nome}">
+				<p:column headerText="Nome" filterBy="#{funcionarioCursor.nome}"
+					sortBy="#{funcionarioCursor.nome}">
 					<h:outputText value="#{funcionarioCursor.nome}" />
 				</p:column>
-				<p:column headerText="CPF" sortBy="#{funcionarioCursor.cpf}">
-					<h:outputText  value="#{funcionarioCursor.cpf}"/>
+				<p:column headerText="CPF" filterBy="#{funcionarioCursor.cpf}"
+					sortBy="#{funcionarioCursor.cpf}">
+					<h:outputText value="#{funcionarioCursor.cpf}" />
 				</p:column>
 				<p:column headerText="Função" sortBy="#{funcionarioCursor.funcao}">
-					<h:outputText  value="#{funcionarioCursor.funcao}"/>
+					<h:outputText value="#{funcionarioCursor.funcao}" />
 				</p:column>
+
 				<p:column headerText="Opções">
+
+					<p:button value="Editar" outcome="/Pages/funcionarioCadastro.xhtml">
+						<f:param name="funAcao" value="Editar" />
+						<f:param name="funCod" value="#{funcionarioCursor.codigo}" />
+					</p:button>
+
+					<p:button value="Excluir"
+						outcome="/Pages/funcionarioCadastro.xhtml">
+						<f:param name="funAcao" value="Excluir" />
+						<f:param name="funCod" value="#{funcionarioCursor.codigo}" />
+					</p:button>
+
 				</p:column>
+
 			</p:dataTable>
 		</h:form>
 	</ui:define>

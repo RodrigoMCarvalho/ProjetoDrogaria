@@ -13,13 +13,13 @@ import br.com.drogaria.domain.Produto;
 
 public class ProdutoDAOTest {
 	@Test
-	@Ignore
+	//@Ignore
 	public void salvar() {
 		FabricanteDAO fdao = new FabricanteDAO();
 		Fabricante fab = fdao.buscarPorCodigo(3L);
 
 		Produto produto = new Produto();
-		produto.setDescricao("Sandeiro");
+		produto.setDescricao("Gol");
 		produto.setPreco(new BigDecimal(31.00D));
 		produto.setQuantidade(3);
 		produto.setFabricante(fab);
@@ -38,7 +38,7 @@ public class ProdutoDAOTest {
 	}
 	
 	@Test
-	//@Ignore
+	@Ignore
 	public void listar() {
 		ProdutoDAO pdao = new ProdutoDAO();
 		
