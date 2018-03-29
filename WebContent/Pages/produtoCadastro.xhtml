@@ -29,39 +29,43 @@
 			</p:toolbar>
 
 			<h:panelGrid columns="2">
-				<h:outputLabel value="Código" />
+				<p:outputLabel value="Código" />
 				<p:inputText maxlength="20" size="10" readonly="true"
 					value="#{produtoBean.produtoCadastro.codigo}" />
 
-				<h:outputLabel value="Nome: " />
+				<p:outputLabel value="Nome: " />
 				<p:inputText maxlength="50" size="30"
 					value="#{produtoBean.produtoCadastro.descricao}"
 					readonly="#{produtoBean.acao == 'Excluir'}">
-					<f:validateBean />
-					<!-- Hiberate Validator -->
+					<f:validateBean />   <!-- Hiberate Validator -->
 				</p:inputText>
 				
 				<h:outputLabel value="Preço: " />
 				<p:inputText size="30"
 					value="#{produtoBean.produtoCadastro.preco}"
 					readonly="#{produtoBean.acao == 'Excluir'}">
-					<f:validateBean />
-					<!-- Hiberate Validator -->
+					<f:validateBean />   <!-- Hiberate Validator -->
 				</p:inputText>
 				
-				<h:outputLabel value="Preço: " />
+				<p:outputLabel value="Quantidade: " />
 				<p:inputText size="20"
 					value="#{produtoBean.produtoCadastro.quantidade}"
 					readonly="#{produtoBean.acao == 'Excluir'}">
-					<f:validateBean />
-					<!-- Hiberate Validator -->
+					<f:validateBean />   <!-- Hiberate Validator -->
 				</p:inputText>
-
 				
-
+				<p:outputLabel value="Fabricante: " />
+				<p:selectOneMenu value="#{produtoBean.produtoCadastro.fabricante}"
+				converter="fabricanteConverter"> 
+				<!-- classe FabricanteConverter no pacote br.com.drogaria.converter -->
 				
+					<f:selectItem itemLabel="Selecione um fabricante." itemValue=""/>
+					<f:selectItems value="#{produtoBean.listFabricantes}" 
+					var="fabricanteCursor" itemValue="#{fabricanteCursor}" itemLabel="#{fabricanteCursor.descricao}"/>
+					<!-- a linha acima é para mostrar somente o nome do fabricante -->
+					<f:validateBean />   <!-- Hiberate Validator -->
+				</p:selectOneMenu>
 
-		
 			</h:panelGrid>
 
 			<h:panelGrid columns="5">

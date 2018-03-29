@@ -5,9 +5,8 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-
 <ui:composition template="/Templates/modeloGeral.xhtml">
-	
+
 	<f:metadata>
 		<!-- IMPORTANTE Necessário para poder carregar a listagem de fabricantes -->
 		<f:viewParam name="proAcao" value="#{produtoBean.acao}" />
@@ -15,32 +14,26 @@
 		<f:event listener="#{produtoBean.carregarPesquisa}"
 			type="preRenderView" />
 	</f:metadata>
-
+	
 	<ui:define name="conteudo">
-
-		<h:form>
+		<h:form id="formVendaCad">
+		
 			<p:toolbar>
 				<f:facet name="left">
-					<h:outputText value="Produto" />
+					<h:outputText value="Vendas" />
 				</f:facet>
 			</p:toolbar>
-
-			<h:panelGrid columns="4">
-				<p:outputLabel value="Novo Produto " />
-				<p:button value="Novo" outcome="/Pages/produtoCadastro.xhtml">
-					<f:param name="proAcao" value="Novo" />
-					<!--enviado por paramêtro GET -->
-				</p:button>
-			</h:panelGrid>
-
+			
+			<p:separator />
+			
 			<p:dataTable emptyMessage="Nenhum registro encontrado."
 				value="#{produtoBean.listProdutos}"
 				filteredValue="#{produtoBean.listProdutosFiltrados}"
-				var="produtoCursor" rows="7" paginator="true">
+				var="produtoCursor" rows="4" paginator="true">
 				<!-- IMPORTANTE "var" não é atributo de classe -->
 
 				<p:column headerText="Código" style="width:10%"
-				sortBy="#{produtoCursor.codigo}">
+					sortBy="#{produtoCursor.codigo}">
 					<h:outputText value="#{produtoCursor.codigo}" />
 				</p:column>
 
@@ -49,35 +42,55 @@
 					sortBy="#{produtoCursor.descricao}">
 					<h:outputText value="#{produtoCursor.descricao}" />
 				</p:column>
-				
+
 				<p:column headerText="Preço" style="width:10%"
 					sortBy="#{produtoCursor.preco}">
 					<h:outputText value="#{produtoCursor.preco}" />
 				</p:column>
-				
-				<p:column headerText="Quantidade"  style="width:10%"
+
+				<p:column headerText="Quantidade" style="width:10%"
 					sortBy="#{produtoCursor.quantidade}">
 					<h:outputText value="#{produtoCursor.quantidade}" />
 				</p:column>
-				
+
 				<p:column headerText="Fabricante"
 					filterBy="#{produtoCursor.fabricante.descricao}">
 					<h:outputText value="#{produtoCursor.fabricante.descricao}" />
 				</p:column>
 
-				<p:column headerText="Opções" style="width:15%">
+				<p:column headerText="Opções" style="width:10%">
+					<p:commandButton value="Adicionar" 
+					actionListener="#{vendaBean.adicionar(produtoCursor)}"
+					update=":formVendaCad:tblItens">
+						
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+		
+			<p:separator />
+			
+			<p:dataTable id="tblItens" emptyMessage="Nenhum registro encontrado."
+				value="#{vendaBean.listItens}" var="itemCursor" rows="3" paginator="true">
+				<!-- IMPORTANTE "var" não é atributo de classe -->
 
-					<p:button value="Editar" outcome="/Pages/produtoCadastro.xhtml">
-						<!-- Envia o parâmetro via GET -->
-						<f:param name="proAcao" value="Editar" />
-						<f:param name="proCod" value="#{produtoCursor.codigo}" />
-					</p:button>
+				<p:column headerText="Produto">
+					<h:outputText value="#{itemCursor.produto.descricao}" />
+				</p:column>
+				
+				<p:column headerText="Fabricante">
+					<h:outputText value="#{itemCursor.produto.fabricante.descricao}" />
+				</p:column>
+				
+				<p:column headerText="Valor Parcial">
+					<h:outputText value="#{itemCursor.produto.preco}" />
+				</p:column>
+				
+				<p:column headerText="Quantidade" style="width:10%">
+					<h:outputText value="#{itemCursor.quantidade}" />
+				</p:column>
 
-					<p:button value="Excluir" outcome="/Pages/produtoCadastro.xhtml">
-						<!-- Envia o parâmetro via GET -->
-						<f:param name="proAcao" value="Excluir" />
-						<f:param name="proCod" value="#{produtoCursor.codigo}" />
-					</p:button>
+				<p:column headerText="Opções">
+					<p:commandButton value="Remover" />
 				</p:column>
 
 

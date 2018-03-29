@@ -40,10 +40,12 @@
 				filteredValue="#{funcionarioBean.listFuncionariosFiltrados}"
 				var="funcionarioCursor" rows="7" paginator="true">
 
-				<p:column headerText="Código" sortBy="#{funcionarioCursor.codigo}">
+				<p:column headerText="Código" style="width:8%"
+					sortBy="#{funcionarioCursor.codigo}">
 					<h:outputText value="#{funcionarioCursor.codigo}" />
 				</p:column>
-				<p:column headerText="Nome" filterBy="#{funcionarioCursor.nome}"
+				<p:column headerText="Nome" style="width:30%"
+					filterBy="#{funcionarioCursor.nome}"
 					sortBy="#{funcionarioCursor.nome}">
 					<h:outputText value="#{funcionarioCursor.nome}" />
 				</p:column>
@@ -51,7 +53,8 @@
 					sortBy="#{funcionarioCursor.cpf}">
 					<h:outputText value="#{funcionarioCursor.cpf}" />
 				</p:column>
-				<p:column headerText="Função" sortBy="#{funcionarioCursor.funcao}">
+				<p:column headerText="Função" style="width:15%"
+					sortBy="#{funcionarioCursor.funcao}">
 					<h:outputText value="#{funcionarioCursor.funcao}" />
 				</p:column>
 

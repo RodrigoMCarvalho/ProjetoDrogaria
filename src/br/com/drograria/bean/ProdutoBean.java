@@ -6,7 +6,9 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import br.com.drogaria.dao.FabricanteDAO;
 import br.com.drogaria.dao.ProdutoDAO;
+import br.com.drogaria.domain.Fabricante;
 import br.com.drogaria.domain.Produto;
 import br.com.drogaria.util.FacesUtil;
 
@@ -19,6 +21,8 @@ public class ProdutoBean {
 	private List<Produto> listProdutosFiltrados;
 	private String acao; // irá guardar 'Novo', 'Editar', 'Excluir'
 	private Long codigo;
+	private List<Fabricante> listFabricantes;
+	
 
 	public void salvar() { // try catch receberá informações da Classe DAO
 		try {
@@ -75,6 +79,10 @@ public class ProdutoBean {
 			} else {
 				produtoCadastro = new Produto();
 			}
+			
+			FabricanteDAO fdao = new FabricanteDAO();  //para carregar o fabricantes no produtoCadastro.xhtml
+			listFabricantes = fdao.listar();
+			
 		} catch (Exception e) {
 			FacesUtil.addMsgError("Falha ao tentar carregar o funcionário: " + e.getMessage());
 		}
@@ -124,6 +132,14 @@ public class ProdutoBean {
 
 	public void setCodigo(Long codigo) {
 		this.codigo = codigo;
+	}
+
+	public List<Fabricante> getListFabricantes() {
+		return listFabricantes;
+	}
+
+	public void setListFabricantes(List<Fabricante> listFabricantes) {
+		this.listFabricantes = listFabricantes;
 	}
 	
 }
