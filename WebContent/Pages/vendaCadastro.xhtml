@@ -61,7 +61,7 @@
 				<p:column headerText="Opções" style="width:10%">
 					<p:commandButton value="Adicionar" 
 					actionListener="#{vendaBean.adicionar(produtoCursor)}"
-					update=":formVendaCad"/>
+					update=":formVendaCad:tblItens :formVendaCad:txtVendaValorTotal"/>
 						
 					
 				</p:column>
@@ -91,10 +91,12 @@
 				</p:column>
 
 				<p:column headerText="Opções">
-					<p:commandButton value="Remover" />
+					<p:commandButton value="Remover" actionListener="#{vendaBean.remover(itemCursor)}"
+					update=":formVendaCad:tblItens :formVendaCad:txtVendaValorTotal"/>
 				</p:column>
-
 			</p:dataTable>
+			<h:outputText id="txtVendaValorTotal" value="Valor Total: #{vendaBean.vendaCadastro.valor}"/>
+			<p:commandButton value="Finalizar"/>
 		</h:form>
 	</ui:define>
 </ui:composition>
