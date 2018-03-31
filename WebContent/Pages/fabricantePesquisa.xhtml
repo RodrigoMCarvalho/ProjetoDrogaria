@@ -37,7 +37,8 @@
 				filteredValue="#{fabricanteBean.listFabricantesFiltrados}"
 				var="fabricanteCursor" rows="7" paginator="true">
 				<!-- IMPORTANTE "var" não é atributo de classe -->
-
+				<!-- O atributo var indica o nome da variável que será utilizada dentro da tabela -->
+				
 				<p:column headerText="Código" sortBy="#{fabricanteCursor.codigo}">
 					<h:outputText value="#{fabricanteCursor.codigo}" />
 				</p:column>

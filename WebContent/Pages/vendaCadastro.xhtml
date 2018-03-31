@@ -61,9 +61,9 @@
 				<p:column headerText="Opções" style="width:10%">
 					<p:commandButton value="Adicionar" 
 					actionListener="#{vendaBean.adicionar(produtoCursor)}"
-					update=":formVendaCad:tblItens">
+					update=":formVendaCad"/>
 						
-					</p:commandButton>
+					
 				</p:column>
 			</p:dataTable>
 		
@@ -72,6 +72,7 @@
 			<p:dataTable id="tblItens" emptyMessage="Nenhum registro encontrado."
 				value="#{vendaBean.listItens}" var="itemCursor" rows="3" paginator="true">
 				<!-- IMPORTANTE "var" não é atributo de classe -->
+				<!-- O atributo var indica o nome da variável que será utilizada dentro da tabela -->
 
 				<p:column headerText="Produto">
 					<h:outputText value="#{itemCursor.produto.descricao}" />
@@ -82,7 +83,7 @@
 				</p:column>
 				
 				<p:column headerText="Valor Parcial">
-					<h:outputText value="#{itemCursor.produto.preco}" />
+					<h:outputText value="#{itemCursor.valor}" />
 				</p:column>
 				
 				<p:column headerText="Quantidade" style="width:10%">
@@ -93,11 +94,8 @@
 					<p:commandButton value="Remover" />
 				</p:column>
 
-
-
 			</p:dataTable>
 		</h:form>
-
 	</ui:define>
 </ui:composition>
 </html>

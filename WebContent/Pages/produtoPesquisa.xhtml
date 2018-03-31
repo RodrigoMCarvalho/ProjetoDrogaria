@@ -38,6 +38,7 @@
 				filteredValue="#{produtoBean.listProdutosFiltrados}"
 				var="produtoCursor" rows="7" paginator="true">
 				<!-- IMPORTANTE "var" não é atributo de classe -->
+				<!-- O atributo var indica o nome da variável que será utilizada dentro da tabela -->
 
 				<p:column headerText="Código" style="width:10%"
 				sortBy="#{produtoCursor.codigo}">

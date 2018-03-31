@@ -24,9 +24,7 @@
 					<h:outputText value="Funcionarios" />
 				</f:facet>
 			</p:toolbar>
-
 			
-
 			<h:panelGrid columns="2">
 				<p:outputLabel value="Novo Funcionário: " />
 				<p:button value="Novo"
@@ -39,6 +37,7 @@
 				value="#{funcionarioBean.listFuncionarios}"
 				filteredValue="#{funcionarioBean.listFuncionariosFiltrados}"
 				var="funcionarioCursor" rows="7" paginator="true">
+				<!-- O atributo var indica o nome da variável que será utilizada dentro da tabela -->
 
 				<p:column headerText="Código" style="width:8%"
 					sortBy="#{funcionarioCursor.codigo}">

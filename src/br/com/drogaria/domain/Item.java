@@ -80,6 +80,12 @@ public class Item {
 	public void setProduto(Produto produto) {
 		this.produto = produto;
 	}
+	
+	@Override
+	public String toString() {
+		return "Item [codigo=" + codigo + ", valor=" + valor + ", quantidade=" + quantidade + ", venda=" + venda
+				+ ", produto=" + produto + "]";
+	}
 
 	@Override
 	public int hashCode() {
