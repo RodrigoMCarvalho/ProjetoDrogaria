@@ -73,6 +73,7 @@
 				paginator="true">
 				<!-- IMPORTANTE "var" não é atributo de classe -->
 				<!-- O atributo var indica o nome da variável que será utilizada dentro da tabela -->
+				<!-- preenche os dados na tabela, como um cursor -->
 
 				<p:column headerText="Produto">
 					<h:outputText value="#{itemCursor.produto.descricao}" />
@@ -96,41 +97,55 @@
 						update=":formVendaCad:tblItens :formVendaCad:txtVendaValorTotal" />
 				</p:column>
 			</p:dataTable>
-			
+
 			<h:panelGrid cellpadding="5" columns="2">
 				<h:outputText id="txtVendaValorTotal"
 					value="Valor Total: #{vendaBean.vendaCadastro.valor}" />
 				<p:commandButton value="Finalizar Venda"
 					actionListener="#{vendaBean.carregarDadosVenda}"
-					oncomplete="PF('wvDlgFimVenda').show();"   
-					update=":formVenda:dlgVenda" /> 	<!-- chama e mostra o dialog-->
+					oncomplete="PF('wvDlgFimVenda').show();"
+					update=":formVenda:dlgVenda" />
+				<!-- chama e mostra o dialog-->
 				<!-- Necessário atualizar o ajax para aparecer os dados no dialog -->
 				<!-- oncomplete é para javascript -->
 			</h:panelGrid>
-			
+
 		</h:form>
 
+		<!-- Dialog de finalização da venda -->
 		<p:dialog closable="true" draggable="true" modal="true"
 			resizable="false" header="Dados da Venda:" widgetVar="wvDlgFimVenda"
 			appendTo="@(body)">
 			<!-- Coloca o dialog em primeiro plano -->
-			
+
 			<h:form id="formVenda">
 				<h:panelGrid id="dlgVenda" columns="2">
+
 					<h:outputText value="Horário: " />
-						<h:outputText value="#{vendaBean.vendaCadastro.horario}">
-							<f:convertDateTime pattern="dd/MM/yyyy HH:mm"
+					<h:outputText value="#{vendaBean.vendaCadastro.horario}">
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm"
 							timeZone="America/Sao_Paulo" />
-						</h:outputText>
+					</h:outputText>
+
 					<h:outputText value="Funcionário: " />
-						<h:outputText value="#{vendaBean.vendaCadastro.funcionario.nome}" />
+					<h:outputText value="#{vendaBean.vendaCadastro.funcionario.nome}" />
+
 					<h:outputText value="Valor Total: " />
-						<h:outputText value="R$ #{vendaBean.vendaCadastro.valor}" />
+					<h:outputText value="R$ #{vendaBean.vendaCadastro.valor}" />
 				</h:panelGrid>
-				<h:panelGrid columns="2" cellpadding="5" cellspacing="5">
-					<p:commandButton value="Salvar" />
+
+				<!-- Painel com os botões de Salvar e Voltar -->
+				<h:panelGrid columns="3" cellpadding="1" cellspacing="1">
+					<p:commandButton value="Salvar"
+						actionListener="#{vendaBean.salvar}"
+						update=":msgGlobalGrowl :formVendaCad:tblItens :formVendaCad:txtVendaValorTotal"
+						oncomplete="PF('wvDlgFimVenda').hide();" />
+					<!--t oncomplete é para executar ao completar as demais ações-->
+					<!-- Update atualização ajax da mensagem global GROWL, do valor total e do carrinho, após finalização -->
+
 					<p:commandButton value="Voltar"
 						onclick="PF('wvDlgFimVenda').hide();" />
+					<!-- Ao clicar no botão Voltar, o dialog fecha -->
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>

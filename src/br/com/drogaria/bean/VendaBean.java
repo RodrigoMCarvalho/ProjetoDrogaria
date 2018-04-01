@@ -1,4 +1,4 @@
-package br.com.drograria.bean;
+package br.com.drogaria.bean;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -8,7 +8,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import br.com.drogaria.dao.FuncionarioDAO;
+import br.com.drogaria.dao.ItemDAO;
 import br.com.drogaria.dao.ProdutoDAO;
+import br.com.drogaria.dao.VendaDAO;
 import br.com.drogaria.domain.Funcionario;
 import br.com.drogaria.domain.Item;
 import br.com.drogaria.domain.Produto;
@@ -79,13 +81,36 @@ public class VendaBean {
 		}
 	}
 	
+	//mostrar os dados no dialog, na finalização da venda
 	public void carregarDadosVenda() {
 		vendaCadastro.setHorario(new Date());
 		
 		FuncionarioDAO dao = new FuncionarioDAO();
 		Funcionario f1 = dao.buscarPorCod(2L);
 		vendaCadastro.setFuncionario(f1);
-				
+	}
+	
+	public void salvar() {
+		try {
+			VendaDAO vdao = new VendaDAO();
+			
+			Long codVenda = vdao.salvar(vendaCadastro);  //referente ao código da venda
+			Venda vendaFK = vdao.buscarPorCod(codVenda); //com o vendaFK recupera a venda feita
+			for (Item item : listItens) { //para cada item da lista de itens 
+				item.setVenda(vendaFK);   //seta a chave estrangeira
+				ItemDAO idao = new ItemDAO();
+				idao.salvar(item);    //salva o item no BD
+			}
+			
+			vendaCadastro = new Venda();
+			vendaCadastro.setValor(new BigDecimal("0.00"));   //para zerar o valor total após finalizar
+			listItens = new ArrayList<>();        //para zerar o carrinho após finalizar
+			
+			FacesUtil.addMsgInfo("Venda realizada com sucesso!");
+		} catch (Exception e) {
+			FacesUtil.addMsgError("Erro para salvar: "+e.getMessage());
+		}
+		
 	}
 	
 	public List<Produto> getListProdutos() {

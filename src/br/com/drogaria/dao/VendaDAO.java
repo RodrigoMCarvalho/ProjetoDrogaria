@@ -12,12 +12,14 @@ import br.com.drogaria.util.HibernateUtil;
 public class VendaDAO {
 	Session sessao = HibernateUtil.getSessionFactory().openSession();
 	
-	public void salvar(Venda venda) {
+	public Long salvar(Venda venda) {  //retornar um Long referente ao código da venda
 		Session sessao = HibernateUtil.getSessionFactory().openSession();
 		Transaction transacao = null;
+		Long codigo = null;
+		
 		try {
 			transacao = sessao.beginTransaction();
-			sessao.save(venda);
+			codigo = (Long) sessao.save(venda);  //salvar a venda e capturar o código da venda
 			transacao.commit();
 		} catch (Exception e) {
 			if (transacao != null) {
@@ -27,7 +29,10 @@ public class VendaDAO {
 		}finally {
 			sessao.close();
 		}
+		return codigo;
 	}
+	
+	
 	@SuppressWarnings("unchecked")
 	public List<Venda> listar() {
 		List<Venda> vendas  = null;

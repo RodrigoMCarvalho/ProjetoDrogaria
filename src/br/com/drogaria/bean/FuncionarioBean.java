@@ -1,4 +1,4 @@
-package br.com.drograria.bean;
+package br.com.drogaria.bean;
 
 import java.util.List;
 
