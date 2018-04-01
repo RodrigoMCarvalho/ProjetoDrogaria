@@ -14,18 +14,18 @@
 		<f:event listener="#{produtoBean.carregarPesquisa}"
 			type="preRenderView" />
 	</f:metadata>
-	
+
 	<ui:define name="conteudo">
 		<h:form id="formVendaCad">
-		
+
 			<p:toolbar>
 				<f:facet name="left">
 					<h:outputText value="Vendas" />
 				</f:facet>
 			</p:toolbar>
-			
+
 			<p:separator />
-			
+
 			<p:dataTable emptyMessage="Nenhum registro encontrado."
 				value="#{produtoBean.listProdutos}"
 				filteredValue="#{produtoBean.listProdutosFiltrados}"
@@ -59,45 +59,82 @@
 				</p:column>
 
 				<p:column headerText="Opções" style="width:10%">
-					<p:commandButton value="Adicionar" 
-					actionListener="#{vendaBean.adicionar(produtoCursor)}"
-					update=":formVendaCad:tblItens :formVendaCad:txtVendaValorTotal"/>
-						
-					
+					<p:commandButton value="Adicionar"
+						actionListener="#{vendaBean.adicionar(produtoCursor)}"
+						update=":formVendaCad:tblItens :formVendaCad:txtVendaValorTotal" />
+
 				</p:column>
 			</p:dataTable>
-		
+
 			<p:separator />
-			
+
 			<p:dataTable id="tblItens" emptyMessage="Nenhum registro encontrado."
-				value="#{vendaBean.listItens}" var="itemCursor" rows="3" paginator="true">
+				value="#{vendaBean.listItens}" var="itemCursor" rows="3"
+				paginator="true">
 				<!-- IMPORTANTE "var" não é atributo de classe -->
 				<!-- O atributo var indica o nome da variável que será utilizada dentro da tabela -->
 
 				<p:column headerText="Produto">
 					<h:outputText value="#{itemCursor.produto.descricao}" />
 				</p:column>
-				
+
 				<p:column headerText="Fabricante">
 					<h:outputText value="#{itemCursor.produto.fabricante.descricao}" />
 				</p:column>
-				
+
 				<p:column headerText="Valor Parcial">
 					<h:outputText value="#{itemCursor.valor}" />
 				</p:column>
-				
+
 				<p:column headerText="Quantidade" style="width:10%">
 					<h:outputText value="#{itemCursor.quantidade}" />
 				</p:column>
 
 				<p:column headerText="Opções">
-					<p:commandButton value="Remover" actionListener="#{vendaBean.remover(itemCursor)}"
-					update=":formVendaCad:tblItens :formVendaCad:txtVendaValorTotal"/>
+					<p:commandButton value="Remover"
+						actionListener="#{vendaBean.remover(itemCursor)}"
+						update=":formVendaCad:tblItens :formVendaCad:txtVendaValorTotal" />
 				</p:column>
 			</p:dataTable>
-			<h:outputText id="txtVendaValorTotal" value="Valor Total: #{vendaBean.vendaCadastro.valor}"/>
-			<p:commandButton value="Finalizar"/>
+			
+			<h:panelGrid cellpadding="5" columns="2">
+				<h:outputText id="txtVendaValorTotal"
+					value="Valor Total: #{vendaBean.vendaCadastro.valor}" />
+				<p:commandButton value="Finalizar Venda"
+					actionListener="#{vendaBean.carregarDadosVenda}"
+					oncomplete="PF('wvDlgFimVenda').show();"   
+					update=":formVenda:dlgVenda" /> 	<!-- chama e mostra o dialog-->
+				<!-- Necessário atualizar o ajax para aparecer os dados no dialog -->
+				<!-- oncomplete é para javascript -->
+			</h:panelGrid>
+			
 		</h:form>
+
+		<p:dialog closable="true" draggable="true" modal="true"
+			resizable="false" header="Dados da Venda:" widgetVar="wvDlgFimVenda"
+			appendTo="@(body)">
+			<!-- Coloca o dialog em primeiro plano -->
+			
+			<h:form id="formVenda">
+				<h:panelGrid id="dlgVenda" columns="2">
+					<h:outputText value="Horário: " />
+						<h:outputText value="#{vendaBean.vendaCadastro.horario}">
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm"
+							timeZone="America/Sao_Paulo" />
+						</h:outputText>
+					<h:outputText value="Funcionário: " />
+						<h:outputText value="#{vendaBean.vendaCadastro.funcionario.nome}" />
+					<h:outputText value="Valor Total: " />
+						<h:outputText value="R$ #{vendaBean.vendaCadastro.valor}" />
+				</h:panelGrid>
+				<h:panelGrid columns="2" cellpadding="5" cellspacing="5">
+					<p:commandButton value="Salvar" />
+					<p:commandButton value="Voltar"
+						onclick="PF('wvDlgFimVenda').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
 	</ui:define>
 </ui:composition>
 </html>

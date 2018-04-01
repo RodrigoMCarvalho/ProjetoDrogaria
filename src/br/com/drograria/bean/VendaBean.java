@@ -2,11 +2,14 @@ package br.com.drograria.bean;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import br.com.drogaria.dao.FuncionarioDAO;
 import br.com.drogaria.dao.ProdutoDAO;
+import br.com.drogaria.domain.Funcionario;
 import br.com.drogaria.domain.Item;
 import br.com.drogaria.domain.Produto;
 import br.com.drogaria.domain.Venda;
@@ -74,6 +77,15 @@ public class VendaBean {
 			//valor total
 			vendaCadastro.setValor(vendaCadastro.getValor().subtract(item.getValor())); //subtração entre BigDecimais
 		}
+	}
+	
+	public void carregarDadosVenda() {
+		vendaCadastro.setHorario(new Date());
+		
+		FuncionarioDAO dao = new FuncionarioDAO();
+		Funcionario f1 = dao.buscarPorCod(2L);
+		vendaCadastro.setFuncionario(f1);
+				
 	}
 	
 	public List<Produto> getListProdutos() {
