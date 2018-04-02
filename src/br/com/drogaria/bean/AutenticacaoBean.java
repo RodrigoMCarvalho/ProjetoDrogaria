@@ -3,6 +3,7 @@ package br.com.drogaria.bean;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import org.apache.commons.codec.digest.DigestUtils;
 
 import br.com.drogaria.dao.FuncionarioDAO;
 import br.com.drogaria.domain.Funcionario;
@@ -17,16 +18,18 @@ public class AutenticacaoBean {
 	public String autenticar() {
 		try {
 			FuncionarioDAO dao = new FuncionarioDAO();
-			funcionarioLogado = dao.autenticacao(funcionarioLogado.getCpf(), funcionarioLogado.getSenha());
+			funcionarioLogado = dao.autenticacao(funcionarioLogado.getCpf(),DigestUtils.md5Hex(funcionarioLogado.getSenha()));
+			// necessário adicionar DigestUtil, por causa da senha no formato MD5
 			if (funcionarioLogado == null) {
 				FacesUtil.addMsgError("Usuário ou/e senha inválidos!");
 			} else {
-			FacesUtil.addMsgInfo("Funcionário autenticado com sucesso");
+				FacesUtil.addMsgInfo("Funcionário autenticado com sucesso");
+				return "/Pages/principal.xhtml?faces-redirect=true";
 			}
 		} catch (Exception e) {
 			FacesUtil.addMsgError("Erro ao tentar acessar o sistema: "+e.getMessage());
 		}
-		return "/Pages/principal.xhtml?faces-redirect=true";
+		return null;
 	}
 	
 	public String sair() {

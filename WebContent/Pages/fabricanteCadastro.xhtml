@@ -49,7 +49,7 @@
 				
 				<p:commandButton value="Salvar" actionListener="#{fabricanteBean.salvar}" 
 				update=":msgGlobalGrowl :formFabCad:pnlFabCad"
-				rendered="#{fabricanteBean.acao == 'Novo'}"/>
+				rendered="#{fabricanteBean.acao == 'Novo'}"/>  <!-- o botão irá aparecer se vir 'Novo' no GET -->
 				
 				<p:commandButton value="Editar" actionListener="#{fabricanteBean.editar}"
 				update=":msgGlobalGrowl :formFabCad:pnlFabCad"

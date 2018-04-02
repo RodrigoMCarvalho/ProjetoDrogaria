@@ -5,6 +5,8 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import br.com.drogaria.dao.FuncionarioDAO;
 import br.com.drogaria.domain.Funcionario;
 import br.com.drogaria.util.FacesUtil;
@@ -23,6 +25,7 @@ public class FuncionarioBean {
 		try {
 			
 			FuncionarioDAO dao = new FuncionarioDAO();
+			funcionarioCadastro.setSenha(DigestUtils.md5Hex(funcionarioCadastro.getSenha())); //senha em MD5
 			dao.salvar(funcionarioCadastro);
 			FacesUtil.addMsgInfo("Funcionário cadastrado com sucesso!"); // ***usando o GROWL e classe FacesUtil
 			funcionarioCadastro = new Funcionario();
@@ -49,6 +52,7 @@ public class FuncionarioBean {
 	public void editar() {
 		try {
 			FuncionarioDAO dao = new FuncionarioDAO();
+			funcionarioCadastro.setSenha(DigestUtils.md5Hex(funcionarioCadastro.getSenha())); //senha em MD5
 			dao.editar(funcionarioCadastro);
 			FacesUtil.addMsgInfo("Funcionário alterado com sucesso!");
 			funcionarioCadastro = new Funcionario();

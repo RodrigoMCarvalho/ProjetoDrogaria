@@ -36,7 +36,7 @@ public class Funcionario {
 	private String cpf;
 	
 	@NotEmpty(message="O campo Senha é obrigatório.")
-	@Size(min=8, max=8, message="Tamanho inválido do campo Senha (8).")
+	@Size(min=5, max=32, message="Tamanho inválido do campo Senha (8).")
 	@Column(name = "fun_senha", length = 32, nullable = false)
 	private String senha;
 	
