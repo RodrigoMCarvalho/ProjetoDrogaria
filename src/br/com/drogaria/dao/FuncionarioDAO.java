@@ -88,6 +88,21 @@ public class FuncionarioDAO {
 		}
 	}
 	
+	public Funcionario autenticacao(String cpf, String senha) {
+		Funcionario funcionario = null;
+		try {
+			Query consulta = sessao.getNamedQuery("Funcionario.logar");
+			consulta.setString("cpf", cpf);
+			consulta.setString("senha", senha);
+			funcionario = (Funcionario) consulta.uniqueResult();
+		} catch (Exception e) {
+			throw e;
+		}finally {
+			sessao.close();
+		}
+		return funcionario;
+	}
+	
 	
 	
 	

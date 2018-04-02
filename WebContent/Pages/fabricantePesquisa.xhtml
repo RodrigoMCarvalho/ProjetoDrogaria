@@ -25,8 +25,8 @@
 			</p:toolbar>
 
 			<h:panelGrid columns="4">
-				<p:outputLabel value="Novo Fabricante: " />
-				<p:button value="Novo"
+				<p:outputLabel value="Novo Fabricante: " rendered="#{autenticacaoBean.funcionarioLogado.funcao != 'Balconista'}"/>
+				<p:button value="Novo" rendered="#{autenticacaoBean.funcionarioLogado.funcao != 'Balconista'}"
 					outcome="/Pages/fabricanteCadastro.xhtml?faces-redirect=true" >
 				<f:param name="fabAcao" value="Novo"/> <!--enviado por paramêtro GET -->
 				</p:button>
@@ -52,13 +52,13 @@
 
 				<p:column headerText="Opções">
 				
-					<p:button value="Editar" outcome="/Pages/fabricanteCadastro.xhtml" >
+					<p:button value="Editar" outcome="/Pages/fabricanteCadastro.xhtml" rendered="#{autenticacaoBean.funcionarioLogado.funcao != 'Balconista'}">
                     <!-- Envia o parâmetro via GET -->
                     <f:param name="fabAcao" value="Editar"/>
 					<f:param name="fabCod" value="#{fabricanteCursor.codigo}"/>
 					</p:button>
 					
-					<p:button value="Excluir" outcome="/Pages/fabricanteCadastro.xhtml" >
+					<p:button value="Excluir" outcome="/Pages/fabricanteCadastro.xhtml" rendered="#{autenticacaoBean.funcionarioLogado.funcao != 'Balconista'}">
 					<!-- Envia o parâmetro via GET -->
 					<f:param name="fabAcao" value="Excluir"/>
 					<f:param name="fabCod" value="#{fabricanteCursor.codigo}"/>

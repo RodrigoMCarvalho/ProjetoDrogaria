@@ -26,8 +26,8 @@
 			</p:toolbar>
 
 			<h:panelGrid columns="4">
-				<p:outputLabel value="Novo Produto " />
-				<p:button value="Novo" outcome="/Pages/produtoCadastro.xhtml">
+				<p:outputLabel value="Novo Produto " rendered="#{autenticacaoBean.funcionarioLogado.funcao != 'Balconista'}"/>
+				<p:button value="Novo" outcome="/Pages/produtoCadastro.xhtml" rendered="#{autenticacaoBean.funcionarioLogado.funcao != 'Balconista'}">
 					<f:param name="proAcao" value="Novo" />
 					<!--enviado por paramêtro GET -->
 				</p:button>
@@ -68,13 +68,13 @@
 
 				<p:column headerText="Opções" style="width:15%">
 
-					<p:button value="Editar" outcome="/Pages/produtoCadastro.xhtml">
+					<p:button value="Editar" outcome="/Pages/produtoCadastro.xhtml" rendered="#{autenticacaoBean.funcionarioLogado.funcao != 'Balconista'}">
 						<!-- Envia o parâmetro via GET -->
-						<f:param name="proAcao" value="Editar" />
+						<f:param name="proAcao" value="Editar"/>
 						<f:param name="proCod" value="#{produtoCursor.codigo}" />
 					</p:button>
 
-					<p:button value="Excluir" outcome="/Pages/produtoCadastro.xhtml">
+					<p:button value="Excluir" outcome="/Pages/produtoCadastro.xhtml" rendered="#{autenticacaoBean.funcionarioLogado.funcao != 'Balconista'}">
 						<!-- Envia o parâmetro via GET -->
 						<f:param name="proAcao" value="Excluir" />
 						<f:param name="proCod" value="#{produtoCursor.codigo}" />

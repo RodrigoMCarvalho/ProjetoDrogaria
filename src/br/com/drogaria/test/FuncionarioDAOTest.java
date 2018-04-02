@@ -60,7 +60,7 @@ public class FuncionarioDAOTest {
 	}
 	
 	@Test
-	//@Ignore
+	@Ignore
 	public void excluir() {
 		FuncionarioDAO dao = new FuncionarioDAO();
 		Funcionario f1 =  new Funcionario();
@@ -70,6 +70,36 @@ public class FuncionarioDAOTest {
 		dao.excluir(f1);
 		
 	}
+	
+	@Test
+	public void autenticacao() {
+		FuncionarioDAO dao =  new FuncionarioDAO();
+		Funcionario f1 = new Funcionario();
+		
+		f1 = dao.autenticacao("440.463.942-26", "12345678");
+		
+		System.out.println("Funcionario: " + f1);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }

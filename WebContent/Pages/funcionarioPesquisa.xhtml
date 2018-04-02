@@ -26,7 +26,7 @@
 			</p:toolbar>
 			
 			<h:panelGrid columns="2">
-				<p:outputLabel value="Novo Funcionário: " />
+				<p:outputLabel value="Novo Funcionário: " rendered="#{autenticacaoBean.funcionarioLogado.funcao != 'Balconista'}" />
 				<p:button value="Novo"
 					outcome="/Pages/funcionarioCadastro.xhtml">
 					<f:param name="funAcao" value="Novo" />

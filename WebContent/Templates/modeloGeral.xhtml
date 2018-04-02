@@ -37,21 +37,21 @@
 
 		<p:layoutUnit header="Menu Principal" size="180" position="west"
 			resizable="false" closable="false" collapsible="false">
-			<h:form>
-				<p:panelMenu>
-					<p:submenu label="Arquivo">
+			<h:form id="formPrincipal">
+				<p:panelMenu id="formMenuPrincipal">
+					<p:submenu label="Arquivo">     
 						<p:menuitem value="Principal" outcome="/Pages/principal.xhtml" />
-						<p:menuitem value="Sair" />
+						<p:menuitem value="Sair" action="#{autenticacaoBean.sair}"/>  
 					</p:submenu>
-					<p:submenu label="Cadastro">
+					<p:submenu label="Cadastro" rendered="#{autenticacaoBean.funcionarioLogado.funcao != null}">
 						<p:menuitem value="Fabricantes"
 							outcome="/Pages/fabricantePesquisa.xhtml" />
 						<p:menuitem value="Produtos" 
 							outcome="/Pages/produtoPesquisa.xhtml"/>
-						<p:menuitem value="Funcionários"
+						<p:menuitem value="Funcionários" rendered="#{autenticacaoBean.funcionarioLogado.funcao != 'Balconista'}"
 							outcome="/Pages/funcionarioPesquisa.xhtml" />
 					</p:submenu>
-					<p:submenu label="Venda">
+					<p:submenu label="Venda" rendered="#{autenticacaoBean.funcionarioLogado.funcao != null}">
 						<p:menuitem value="Novo"
 						outcome="/Pages/vendaCadastro.xhtml"/>
 					</p:submenu>
