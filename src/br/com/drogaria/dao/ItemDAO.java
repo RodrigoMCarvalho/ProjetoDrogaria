@@ -6,7 +6,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import br.com.drogaria.domain.Fabricante;
 import br.com.drogaria.domain.Item;
 import br.com.drogaria.util.HibernateUtil;
 

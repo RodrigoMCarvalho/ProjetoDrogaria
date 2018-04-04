@@ -43,14 +43,17 @@
 				<h:outputLabel value="Preço: " />
 				<p:inputText size="30"
 					value="#{produtoBean.produtoCadastro.preco}"
-					readonly="#{produtoBean.acao == 'Excluir'}">
+					readonly="#{produtoBean.acao == 'Excluir'}"
+					converterMessage="Informe um valor válido no campo Preço.">
 					<f:validateBean />   <!-- Hiberate Validator -->
+					<f:convertNumber />   <!-- Converte vírgula para ponto -->
 				</p:inputText>
 				
 				<p:outputLabel value="Quantidade: " />
 				<p:inputText size="20"
 					value="#{produtoBean.produtoCadastro.quantidade}"
-					readonly="#{produtoBean.acao == 'Excluir'}">
+					readonly="#{produtoBean.acao == 'Excluir'}"
+					converterMessage="Informe somente números no campo Quantidade.">
 					<f:validateBean />   <!-- Hiberate Validator -->
 				</p:inputText>
 				

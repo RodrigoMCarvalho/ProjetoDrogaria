@@ -15,12 +15,11 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-
-
 
 @Entity
 @Table(name="tbl_produtos")
@@ -41,6 +40,7 @@ public class Produto {
 	@NotNull(message="O campo Preço é obrigatório")
 	@DecimalMin(value="0.00", message="Informe um valor maior que 0.")
 	@DecimalMax(value="99999.99",message="Informe um valor menor que 100.00.")
+	@Digits(integer=5, fraction=2, message="Informe um valor no formato correto.Ex: 9,99") //caso o usuário digite 9,654, por exemplo
 	@Column(name="pro_preco",scale = 2,precision=7, nullable=false ) //decimal(7,2)
 	private BigDecimal preco;
 	

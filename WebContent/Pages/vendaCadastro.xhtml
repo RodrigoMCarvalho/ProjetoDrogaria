@@ -45,7 +45,10 @@
 
 				<p:column headerText="Preço" style="width:10%"
 					sortBy="#{produtoCursor.preco}">
-					<h:outputText value="#{produtoCursor.preco}" />
+					<h:outputText value="R$" />
+					<h:outputText value="#{produtoCursor.preco}">
+						<f:convertNumber />
+					</h:outputText>
 				</p:column>
 
 				<p:column headerText="Quantidade" style="width:10%"
@@ -61,8 +64,7 @@
 				<p:column headerText="Opções" style="width:10%">
 					<p:commandButton value="Adicionar"
 						actionListener="#{vendaBean.adicionar(produtoCursor)}"
-						update=":formVendaCad:tblItens :formVendaCad:txtVendaValorTotal" />
-
+						update=":formVendaCad:tblItens" />
 				</p:column>
 			</p:dataTable>
 
@@ -83,36 +85,45 @@
 					<h:outputText value="#{itemCursor.produto.fabricante.descricao}" />
 				</p:column>
 
-				<p:column headerText="Valor Parcial">
-					<h:outputText value="#{itemCursor.valor}" />
-				</p:column>
-
-				<p:column headerText="Quantidade" style="width:10%">
+				<p:column headerText="Quantidade" style="width:10%"
+					footerText="Total: #{vendaBean.vendaCadastro.quantidade}">
 					<h:outputText value="#{itemCursor.quantidade}" />
 				</p:column>
 
-				<p:column headerText="Opções">
+				<p:column headerText="Valor Parcial" style="width:10%">
+					<f:facet name="footer">
+						<h:outputText value="Total: R$ " />
+						<h:outputText value="#{vendaBean.vendaCadastro.valor}">
+							<f:convertNumber pattern="0.00" />
+						</h:outputText>
+					</f:facet>
+					<h:outputText value="R$ " />
+					<h:outputText value="#{itemCursor.valor}">
+						<f:convertNumber pattern="0.00" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Opções" style= "width: 10%">
+					<f:facet name="footer">
+						<p:commandButton value="Finalizar Venda"
+							actionListener="#{vendaBean.carregarDadosVenda}"
+							oncomplete="PF('wvDlgFimVenda').show();"
+							update=":formVenda:dlgVenda" />
+					<!-- chama e mostra o dialog-->
+					<!-- Necessário atualizar o ajax para aparecer os dados no dialog -->
+					<!-- oncomplete é para javascripth -->
+					</f:facet>
+					
 					<p:commandButton value="Remover"
 						actionListener="#{vendaBean.remover(itemCursor)}"
-						update=":formVendaCad:tblItens :formVendaCad:txtVendaValorTotal" />
+						update=":formVendaCad:tblItens" />
 				</p:column>
+				
 			</p:dataTable>
-
-			<h:panelGrid cellpadding="5" columns="2">
-				<h:outputText id="txtVendaValorTotal"
-					value="Valor Total: #{vendaBean.vendaCadastro.valor}" />
-				<p:commandButton value="Finalizar Venda"
-					actionListener="#{vendaBean.carregarDadosVenda}"
-					oncomplete="PF('wvDlgFimVenda').show();"
-					update=":formVenda:dlgVenda" />
-				<!-- chama e mostra o dialog-->
-				<!-- Necessário atualizar o ajax para aparecer os dados no dialog -->
-				<!-- oncomplete é para javascript -->
-			</h:panelGrid>
 
 		</h:form>
 
-		<!-- Dialog de finalização da venda -->
+		<!-- Dialog de finalização da venda  -->
 		<p:dialog closable="true" draggable="true" modal="true"
 			resizable="false" header="Dados da Venda:" widgetVar="wvDlgFimVenda"
 			appendTo="@(body)">
@@ -131,14 +142,16 @@
 					<h:outputText value="#{vendaBean.vendaCadastro.funcionario.nome}" />
 
 					<h:outputText value="Valor Total: " />
-					<h:outputText value="R$ #{vendaBean.vendaCadastro.valor}" />
+					<h:outputText value="R$ #{vendaBean.vendaCadastro.valor}">
+						<f:convertNumber />
+					</h:outputText>
 				</h:panelGrid>
 
-				<!-- Painel com os botões de Salvar e Voltar -->
+				<!-- 	Painel com os botões de Salvar e Voltar -->
 				<h:panelGrid columns="3" cellpadding="1" cellspacing="1">
 					<p:commandButton value="Salvar"
 						actionListener="#{vendaBean.salvar}"
-						update=":msgGlobalGrowl :formVendaCad:tblItens :formVendaCad:txtVendaValorTotal"
+						update=":msgGlobalGrowl :formVendaCad:tblItens "
 						oncomplete="PF('wvDlgFimVenda').hide();" />
 					<!--t oncomplete é para executar ao completar as demais ações-->
 					<!-- Update atualização ajax da mensagem global GROWL, do valor total e do carrinho, após finalização -->

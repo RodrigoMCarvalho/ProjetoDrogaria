@@ -42,12 +42,13 @@
 				var="produtoCursor" rows="7" paginator="true">
 				<!-- IMPORTANTE "var" não é atributo de classe -->
 				<!-- O atributo var ind ica o nome da variável que será utilizada dentro da tabela -->
-				
+
 				<!-- Exportação em PDF e XLS -->
 				<f:facet name="header">
-					<h:outputText value="Exportação:" style="margin-left:1000px"/>
+					<h:outputText value="Exportação:" style="margin-left:1000px" />
 					<h:commandLink>
-						<p:graphicImage library="images" name="excel.png.xhtml.png" width="24" />
+						<p:graphicImage library="images" name="excel.png.xhtml.png"
+							width="24" />
 						<p:dataExporter type="xls" target="tblProdutos"
 							fileName="produtos" />
 					</h:commandLink>
@@ -55,8 +56,8 @@
 						<p:graphicImage library="images" name="pdf.png.xhtml.png"
 							width="24" />
 						<p:dataExporter type="pdf" target="tblProdutos"
-							fileName="produtos" encoding="ISO-8859-1"/>
-							<!-- Usando UTF-8 não é mostrado Ç e acentos -->
+							fileName="produtos" encoding="ISO-8859-1" />
+						<!-- Usando UTF-8 não é mostrado Ç e acentos -->
 					</h:commandLink>
 				</f:facet>
 
@@ -73,7 +74,10 @@
 
 				<p:column headerText="Preço" style="width:10%"
 					sortBy="#{produtoCursor.preco}">
-					<h:outputText value="#{produtoCursor.preco}" />
+					<h:outputText value="R$ "/>
+					<h:outputText value="#{produtoCursor.preco}">
+						<f:convertNumber pattern="0.00"/>
+					</h:outputText>
 				</p:column>
 
 				<p:column headerText="Quantidade" style="width:10%"
@@ -86,7 +90,8 @@
 					<h:outputText value="#{produtoCursor.fabricante.descricao}" />
 				</p:column>
 
-				<p:column headerText="Opções" style="width:15%" exportable="false"> <!-- para não exportar em PDF ou XLS -->
+				<p:column headerText="Opções" style="width:15%" exportable="false">
+					<!-- para não exportar em PDF ou XLS -->
 
 					<p:button value="Editar" outcome="/Pages/produtoCadastro.xhtml"
 						rendered="#{autenticacaoBean.funcionarioLogado.funcao != 'Balconista'}">
