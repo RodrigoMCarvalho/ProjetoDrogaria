@@ -7,7 +7,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 <ui:composition template="/Templates/modeloGeral.xhtml">
-	
+
 	<f:metadata>
 		<!-- IMPORTANTE Necessário para poder carregar a listagem de fabricantes -->
 		<f:viewParam name="proAcao" value="#{produtoBean.acao}" />
@@ -26,22 +26,42 @@
 			</p:toolbar>
 
 			<h:panelGrid columns="4">
-				<p:outputLabel value="Novo Produto " rendered="#{autenticacaoBean.funcionarioLogado.funcao != 'Balconista'}"/>
-				<p:button value="Novo" outcome="/Pages/produtoCadastro.xhtml" rendered="#{autenticacaoBean.funcionarioLogado.funcao != 'Balconista'}">
+				<p:outputLabel value="Novo Produto "
+					rendered="#{autenticacaoBean.funcionarioLogado.funcao != 'Balconista'}" />
+				<p:button value="Novo" outcome="/Pages/produtoCadastro.xhtml"
+					rendered="#{autenticacaoBean.funcionarioLogado.funcao != 'Balconista'}">
 					<f:param name="proAcao" value="Novo" />
 					<!--enviado por paramêtro GET -->
 				</p:button>
 			</h:panelGrid>
 
-			<p:dataTable emptyMessage="Nenhum registro encontrado."
+			<p:dataTable id="tblProdutos"
+				emptyMessage="Nenhum registro encontrado."
 				value="#{produtoBean.listProdutos}"
 				filteredValue="#{produtoBean.listProdutosFiltrados}"
 				var="produtoCursor" rows="7" paginator="true">
 				<!-- IMPORTANTE "var" não é atributo de classe -->
-				<!-- O atributo var indica o nome da variável que será utilizada dentro da tabela -->
+				<!-- O atributo var ind ica o nome da variável que será utilizada dentro da tabela -->
+				
+				<!-- Exportação em PDF e XLS -->
+				<f:facet name="header">
+					<h:outputText value="Exportação:" style="margin-left:1000px"/>
+					<h:commandLink>
+						<p:graphicImage library="images" name="excel.png.xhtml.png" width="24" />
+						<p:dataExporter type="xls" target="tblProdutos"
+							fileName="produtos" />
+					</h:commandLink>
+					<h:commandLink>
+						<p:graphicImage library="images" name="pdf.png.xhtml.png"
+							width="24" />
+						<p:dataExporter type="pdf" target="tblProdutos"
+							fileName="produtos" encoding="ISO-8859-1"/>
+							<!-- Usando UTF-8 não é mostrado Ç e acentos -->
+					</h:commandLink>
+				</f:facet>
 
 				<p:column headerText="Código" style="width:10%"
-				sortBy="#{produtoCursor.codigo}">
+					sortBy="#{produtoCursor.codigo}">
 					<h:outputText value="#{produtoCursor.codigo}" />
 				</p:column>
 
@@ -50,38 +70,38 @@
 					sortBy="#{produtoCursor.descricao}">
 					<h:outputText value="#{produtoCursor.descricao}" />
 				</p:column>
-				
+
 				<p:column headerText="Preço" style="width:10%"
 					sortBy="#{produtoCursor.preco}">
 					<h:outputText value="#{produtoCursor.preco}" />
 				</p:column>
-				
-				<p:column headerText="Quantidade"  style="width:10%"
+
+				<p:column headerText="Quantidade" style="width:10%"
 					sortBy="#{produtoCursor.quantidade}">
 					<h:outputText value="#{produtoCursor.quantidade}" />
 				</p:column>
-				
+
 				<p:column headerText="Fabricante"
 					filterBy="#{produtoCursor.fabricante.descricao}">
 					<h:outputText value="#{produtoCursor.fabricante.descricao}" />
 				</p:column>
 
-				<p:column headerText="Opções" style="width:15%">
+				<p:column headerText="Opções" style="width:15%" exportable="false"> <!-- para não exportar em PDF ou XLS -->
 
-					<p:button value="Editar" outcome="/Pages/produtoCadastro.xhtml" rendered="#{autenticacaoBean.funcionarioLogado.funcao != 'Balconista'}">
+					<p:button value="Editar" outcome="/Pages/produtoCadastro.xhtml"
+						rendered="#{autenticacaoBean.funcionarioLogado.funcao != 'Balconista'}">
 						<!-- Envia o parâmetro via GET -->
-						<f:param name="proAcao" value="Editar"/>
+						<f:param name="proAcao" value="Editar" />
 						<f:param name="proCod" value="#{produtoCursor.codigo}" />
 					</p:button>
 
-					<p:button value="Excluir" outcome="/Pages/produtoCadastro.xhtml" rendered="#{autenticacaoBean.funcionarioLogado.funcao != 'Balconista'}">
+					<p:button value="Excluir" outcome="/Pages/produtoCadastro.xhtml"
+						rendered="#{autenticacaoBean.funcionarioLogado.funcao != 'Balconista'}">
 						<!-- Envia o parâmetro via GET -->
 						<f:param name="proAcao" value="Excluir" />
 						<f:param name="proCod" value="#{produtoCursor.codigo}" />
 					</p:button>
 				</p:column>
-
-
 
 			</p:dataTable>
 		</h:form>

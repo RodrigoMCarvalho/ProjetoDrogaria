@@ -21,7 +21,8 @@ public class AutenticacaoBean {
 			funcionarioLogado = dao.autenticacao(funcionarioLogado.getCpf(),DigestUtils.md5Hex(funcionarioLogado.getSenha()));
 			// necessário adicionar DigestUtil, por causa da senha no formato MD5
 			if (funcionarioLogado == null) {
-				FacesUtil.addMsgError("Usuário ou/e senha inválidos!");
+				FacesUtil.addMsgError("CPF ou/e senha inválidos!");
+				return null;
 			} else {
 				FacesUtil.addMsgInfo("Funcionário autenticado com sucesso");
 				return "/Pages/principal.xhtml?faces-redirect=true";

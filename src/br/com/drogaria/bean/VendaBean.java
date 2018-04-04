@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import br.com.drogaria.dao.FuncionarioDAO;
@@ -23,9 +24,11 @@ public class VendaBean {
 	private List<Produto> listProdutos;
 	private List<Produto> listProdutosFiltrados;
 	private Venda vendaCadastro;	//valor total
-	
 	private List<Item> listItens; //carrinho de compras
-
+	
+	@ManagedProperty(value = "#{autenticacaoBean}")  //enjeção para capturar o ManagedBean que está na memória e 
+	private AutenticacaoBean autenticacaoBean;   	// guardar nesse objeto. No caso, o 'funcionarioLogado'.
+	
 	public void carregarProdutos() {
 
 		try {
@@ -86,7 +89,8 @@ public class VendaBean {
 		vendaCadastro.setHorario(new Date());
 		
 		FuncionarioDAO dao = new FuncionarioDAO();
-		Funcionario f1 = dao.buscarPorCod(2L);
+		//guarda em f1 o funcionario logado
+		Funcionario f1 = dao.buscarPorCod(autenticacaoBean.getFuncionarioLogado().getCodigo());
 		vendaCadastro.setFuncionario(f1);
 	}
 	
@@ -113,6 +117,14 @@ public class VendaBean {
 		
 	}
 	
+	public AutenticacaoBean getAutenticacaoBean() {
+		return autenticacaoBean;
+	}
+
+	public void setAutenticacaoBean(AutenticacaoBean autenticacaoBean) {
+		this.autenticacaoBean = autenticacaoBean;
+	}
+
 	public List<Produto> getListProdutos() {
 		return listProdutos;
 	}
