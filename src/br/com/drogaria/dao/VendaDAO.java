@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import br.com.drogaria.domain.Venda;
+import br.com.drogaria.filter.VendaFilter;
 import br.com.drogaria.util.HibernateUtil;
 
 public class VendaDAO {
@@ -93,5 +94,50 @@ public class VendaDAO {
 			sessao.close();
 		}
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Venda> buscar(VendaFilter filtro){
+		Session sessao = HibernateUtil.getSessionFactory().openSession();
+		List<Venda> vendas = null;
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append("SELECT venda FROM Venda venda "); //espaço no final para concatenar com o comando abaixo
+		if (filtro.getDataInicial() != null && filtro.getDataFinal() != null) { //Se o usuário informou a data inicial e final
+			sql.append("WHERE venda.horario BETWEEN :dataInicial AND :dataFinal ");
+		}
+		sql.append("ORDER BY venda.horario ");
+		
+		try {
+			Query consulta = sessao.createQuery(sql.toString());
+			if (filtro.getDataInicial() != null && filtro.getDataFinal() != null) {
+				consulta.setDate("dataInicial", filtro.getDataInicial());
+				consulta.setDate("dataFinal", filtro.getDataFinal());
+			}
+			vendas = consulta.list();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}finally {
+			sessao.close();
+		}
+		return vendas;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

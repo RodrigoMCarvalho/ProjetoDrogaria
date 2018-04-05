@@ -54,6 +54,8 @@
 					<p:submenu label="Venda" rendered="#{autenticacaoBean.funcionarioLogado.funcao != null}">
 						<p:menuitem value="Novo"
 						outcome="/Pages/vendaCadastro.xhtml"/>
+						<p:menuitem value="Pesquisa" 
+						outcome="/Pages/vendaPesquisa.xhtml"/>
 					</p:submenu>
 				</p:panelMenu>
 			</h:form>

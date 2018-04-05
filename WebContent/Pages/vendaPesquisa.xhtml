@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="/Templates/modeloGeral.xhtml">
+	<ui:define name="conteudo">
+		<h:form id="formVendas">
+			<p:toolbar>
+				<f:facet name="left">
+					<h:outputText value="Vendas" />
+				</f:facet>
+			</p:toolbar>
+
+			<p:separator />
+
+			<h:panelGrid columns="5">
+				<h:outputLabel value="Data Inicial:" />
+				<p:calendar value="#{vendaBean.filtro.dataInicial}" />
+				<h:outputLabel value="Data Final:" />
+				<p:calendar value="#{vendaBean.filtro.dataFinal}" />
+				<p:commandButton value="Buscar" actionListener="#{vendaBean.buscar}"
+					update=":msgGlobalGrowl :formVendas:tblVendas" />
+			</h:panelGrid>
+
+			<p:separator />
+
+			<p:dataTable emptyMessage="Nenhuma venda encontrada."
+				value="#{vendaBean.listVentas}" id="tblVendas" var="vendaCursor"
+				paginator="true">
+
+				<p:column headerText="Código" style="width: 5%"
+					sortBy="#{vendaCursor.codigo}">
+					<h:outputText value="#{vendaCursor.codigo}" />
+				</p:column>
+
+				<p:column headerText="Hórario da venda"
+					sortBy="#{vendaCursor.horario}">
+					<h:outputText value="Data: " />
+					<h:outputText value="#{vendaCursor.horario}">
+						<f:convertDateTime pattern="dd/MM/yyyy " />
+					</h:outputText>
+					<h:outputText value="- Hora: " />
+					<h:outputText value="#{vendaCursor.horario}">
+						<f:convertDateTime pattern="HH:mm" />
+					</h:outputText>
+					<h:outputText value="min" />
+				</p:column>
+
+				<p:column headerText="Valor" style="width: 10%"
+					sortBy="#{vendaCursor.valor}">
+					<h:outputText value="R$ " />
+					<h:outputText value="#{vendaCursor.valor}">
+						<f:convertNumber />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Funcionário" style="width: 40%"
+					sortBy="#{vendaCursor.funcionario.nome}">
+					<h:outputText value="#{vendaCursor.funcionario.nome}" />
+				</p:column>
+
+				<p:column headerText="Opções" style="width:10%">
+					<p:commandButton value="Detalhes"
+						oncomplete="PF('wvDlgDetalhes').show();"
+						update=":formDetalhesVenda:dlgVenda" />
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+
+		<!-- Dialog de finalização da venda  -->
+		<p:dialog closable="true" draggable="true" modal="true"
+			resizable="false" header="Dados da Venda:" widgetVar="wvDlgDetalhes"
+			appendTo="@(body)">
+			<!-- Coloca o dialog em primeiro plano -->
+
+			<h:form id="formDetalhesVenda">
+				<h:panelGrid id="dlgVenda" columns="2">
+
+					<h:outputText value="Horário: " />
+					<h:outputText value="#{vendaBean.item.valor}">
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm"
+							timeZone="America/Sao_Paulo" />
+					</h:outputText>
+
+					<h:outputText value="Funcionário: " />
+					<h:outputText value="#{vendaBean.vendaCadastro.horario}" />
+
+					<h:outputText value="Valor Total: " />
+					<h:outputText value="R$ #{vendaBean.item.quantidade}">
+						<f:convertNumber />
+					</h:outputText>
+				</h:panelGrid>
+
+				<!-- 	Painel com o botão Voltar -->
+				<h:panelGrid columns="3" cellpadding="1" cellspacing="1">
+
+					<p:commandButton value="Voltar"
+						onclick="PF('wvDlgDetalhes').hide();" />
+					<!-- Ao clicar no botão Voltar, o dialog fecha -->
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
+</html>

@@ -103,22 +103,22 @@
 					</h:outputText>
 				</p:column>
 
-				<p:column headerText="Opções" style= "width: 10%">
+				<p:column headerText="Opções" style="width: 10%">
 					<f:facet name="footer">
 						<p:commandButton value="Finalizar Venda"
 							actionListener="#{vendaBean.carregarDadosVenda}"
 							oncomplete="PF('wvDlgFimVenda').show();"
 							update=":formVenda:dlgVenda" />
-					<!-- chama e mostra o dialog-->
-					<!-- Necessário atualizar o ajax para aparecer os dados no dialog -->
-					<!-- oncomplete é para javascripth -->
+						<!-- chama e mostra o dialog-->
+						<!-- Necessário atualizar o ajax para aparecer os dados no dialog -->
+						<!-- oncomplete é para javascripth -->
 					</f:facet>
-					
+
 					<p:commandButton value="Remover"
 						actionListener="#{vendaBean.remover(itemCursor)}"
 						update=":formVendaCad:tblItens" />
 				</p:column>
-				
+
 			</p:dataTable>
 
 		</h:form>
@@ -126,7 +126,7 @@
 		<!-- Dialog de finalização da venda  -->
 		<p:dialog closable="true" draggable="true" modal="true"
 			resizable="false" header="Dados da Venda:" widgetVar="wvDlgFimVenda"
-			appendTo="@(body)">
+			appendTo="@(body)" >
 			<!-- Coloca o dialog em primeiro plano -->
 
 			<h:form id="formVenda">
@@ -153,7 +153,7 @@
 						actionListener="#{vendaBean.salvar}"
 						update=":msgGlobalGrowl :formVendaCad:tblItens "
 						oncomplete="PF('wvDlgFimVenda').hide();" />
-					<!--t oncomplete é para executar ao completar as demais ações-->
+					<!-- oncomplete é para executar ao completar as demais ações-->
 					<!-- Update atualização ajax da mensagem global GROWL, do valor total e do carrinho, após finalização -->
 
 					<p:commandButton value="Voltar"

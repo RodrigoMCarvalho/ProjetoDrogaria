@@ -16,6 +16,7 @@ import br.com.drogaria.domain.Funcionario;
 import br.com.drogaria.domain.Item;
 import br.com.drogaria.domain.Produto;
 import br.com.drogaria.domain.Venda;
+import br.com.drogaria.filter.VendaFilter;
 import br.com.drogaria.util.FacesUtil;
 
 @ManagedBean
@@ -25,6 +26,9 @@ public class VendaBean {
 	private List<Produto> listProdutosFiltrados;
 	private Venda vendaCadastro;	//valor total
 	private List<Item> listItens; //carrinho de compras
+	private VendaFilter filtro;
+	private List<Venda> listVentas;
+	private Item item;
 	
 	@ManagedProperty(value = "#{autenticacaoBean}")  //enjeção para capturar o ManagedBean que está na memória e 
 	private AutenticacaoBean autenticacaoBean;   	// guardar nesse objeto. No caso, o 'funcionarioLogado'.
@@ -120,6 +124,17 @@ public class VendaBean {
 		
 	}
 	
+	public void buscar() {
+		try {
+			VendaDAO dao = new VendaDAO();
+			listVentas = dao.buscar(filtro);
+
+		} catch (Exception e) {
+			FacesUtil.addMsgError("Erro ao tentar buscar a venda: " + e.getMessage());
+		}
+		
+	}
+	
 	public AutenticacaoBean getAutenticacaoBean() {
 		return autenticacaoBean;
 	}
@@ -168,4 +183,35 @@ public class VendaBean {
 		this.vendaCadastro = vendaCadastro;
 	}
 
+	public VendaFilter getFiltro() {
+		if (filtro == null) {       //Para evitar NullPointException
+			filtro = new VendaFilter();
+		}
+		return filtro;
+	}
+
+	public void setFiltro(VendaFilter filtro) {
+		this.filtro = filtro;
+	}
+
+	public List<Venda> getListVentas() {
+		return listVentas;
+	}
+
+	public void setListVentas(List<Venda> listVentas) {
+		this.listVentas = listVentas;
+	}
+
+	public Item getItem() {
+		if (item == null) {
+			item = new Item();
+		}
+		return item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
+	}
+	
+	
 }
